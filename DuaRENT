@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="sq" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DUA Rent - Sistemi i Menaxhimit</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .modal-enter {
+      animation: modalEnter 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes modalEnter {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOutRight {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+    }
+
+    .toast-enter {
+      animation: slideInRight 0.3s ease-out;
+    }
+
+    .toast-exit {
+      animation: slideOutRight 0.3s ease-in;
+    }
+
+    [x-cloak] {
+      display: none !important;
+    }
+
+    /* Smooth transitions for all interactive elements */
+    .transition-smooth {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+</head>
+
+<body class="h-full bg-slate-950 overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+    class="fixed inset-y-0 left-0 z-30 w-64 bg-slate-900 text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-xl">
+    <div class="p-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div
+          class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center font-bold text-lg">
+          D</div>
+        <span class="font-bold text-xl tracking-tight">DUA<span class="font-light text-slate-400">Rent</span></span>
+      </div>
+      <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <nav class="flex-1 px-4 py-4 space-y-1">
+      <button onclick="navigateTo('dashboard')" data-tab="dashboard"
+        class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span class="font-medium text-sm">Paneli</span>
+      </button>
+      <button onclick="navigateTo('fleet')" data-tab="fleet"
+        class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group">
+        <i data-lucide="car" class="w-5 h-5"></i>
+        <span class="font-medium text-sm">Veturat</span>
+      </button>
+      <button onclick="navigateTo('bookings')" data-tab="bookings"
+        class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group">
+        <i data-lucide="calendar-days" class="w-5 h-5"></i>
+        <span class="font-medium text-sm">Rezervimet</span>
+      </button>
+      <button onclick="navigateTo('clients')" data-tab="clients"
+        class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group">
+        <i data-lucide="users" class="w-5 h-5"></i>
+        <span class="font-medium text-sm">Klientët</span>
+      </button>
+    </nav>
+
+    <div class="p-4 border-t border-slate-800">
+      <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+        <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center">
+          <i data-lucide="user" class="w-5 h-5 text-slate-300"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-white truncate">Administrator</p>
+          <p class="text-xs text-indigo-400 truncate">Sistemi Qendror</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="lg:ml-64 flex flex-col h-full">
+    <!-- Header -->
+    <header
+      class="h-20 bg-slate-900/80 backdrop-blur-md border-b border-slate-700 px-4 md:px-8 flex items-center justify-between sticky top-0 z-10">
+      <div class="flex items-center gap-4 flex-1">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg text-slate-400 hover:bg-slate-800">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex flex-col items-end mr-2">
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Sot</span>
+          <div class="flex items-center gap-2 text-sm font-medium text-slate-300">
+            <i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-400"></i>
+            <span id="currentDate"></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Demo Mode Banner -->
+    <div class="bg-amber-500/10 border-b border-amber-500/20 px-4 md:px-8 py-2">
+      <div class="flex items-center gap-2 text-amber-400 text-sm">
+        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+        <span class="font-medium">⚠️ Demo Mode: Të dhënat ruhen vetëm lokalisht (Local Storage).</span>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+      <!-- Dashboard View -->
+      <div id="view-dashboard" class="view-content hidden">
+        <div class="space-y-6 animate-fade-in">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h1 class="text-2xl font-bold text-white tracking-tight">Pasqyra e Panelit</h1>
+              <p class="text-slate-400 text-sm mt-1">Mirësevini, ja çfarë po ndodh sot.</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="openAddCarModal()"
+                class="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-indigo-500/50 active:scale-95">
+                <i data-lucide="plus" class="w-4.5 h-4.5"></i>
+                <span>Shto Veturë</span>
+              </button>
+              <button onclick="openBookingModal()"
+                class="flex items-center gap-2 px-4 py-2 bg-slate-800 border border-slate-600 text-slate-200 rounded-xl text-sm font-medium hover:bg-slate-700 transition-all duration-300 active:scale-95">
+                <i data-lucide="calendar-plus" class="w-4.5 h-4.5 text-indigo-500"></i>
+                <span>Rezervim i Ri</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div id="statsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"></div>
+
+          <!-- Bookings Table -->
+          <div id="dashboardBookings"></div>
+        </div>
+      </div>
+
+      <!-- Fleet View -->
+      <div id="view-fleet" class="view-content hidden">
+        <div class="space-y-6 animate-fade-in">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-2xl font-bold text-white">Veturat</h2>
+              <p class="text-slate-400 text-sm mt-1" id="fleetSubtitle">Menaxho flotën tënde</p>
+            </div>
+          </div>
+          <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+        </div>
+      </div>
+
+      <!-- Bookings View -->
+      <div id="view-bookings" class="view-content hidden">
+        <div class="space-y-6 animate-fade-in">
+          <div>
+            <h2 class="text-2xl font-bold text-white">Rezervimet</h2>
+            <p class="text-slate-400 text-sm mt-1">Shiko dhe menaxho të gjitha rezervimet</p>
+          </div>
+          <div id="bookingsTable"></div>
+        </div>
+      </div>
+
+      <!-- Clients View -->
+      <div id="view-clients" class="view-content hidden">
+        <div class="space-y-6 animate-fade-in">
+          <div>
+            <h2 class="text-2xl font-bold text-white">Klientët</h2>
+            <p class="text-slate-400 text-sm mt-1">Lista e gjeneruar automatikisht nga rezervimet.</p>
+          </div>
+          <div id="clientsTable"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Car Modal -->
+  <div id="addCarModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md">
+    <div
+      class="bg-slate-800 rounded-3xl w-full max-w-2xl shadow-2xl border border-slate-700 overflow-y-auto max-h-[90vh] modal-enter">
+      <div class="p-6 border-b border-slate-700 flex justify-between items-center sticky top-0 bg-slate-800 z-10">
+        <h3 class="text-xl font-bold text-white">Shto Veturë të Re</h3>
+        <button onclick="closeAddCarModal()" class="p-2 rounded-full hover:bg-slate-700 text-slate-400">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <form id="addCarForm" class="p-6 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm font-medium text-slate-300 mb-1">Emri i Veturës</label>
+              <input required type="text" name="name" placeholder="p.sh. Audi A6"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-1">Targa</label>
+              <input required type="text" name="plate" placeholder="AB-001-XX"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none uppercase">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Çmimi Ditor (€)</label>
+                <input required type="number" name="price" placeholder="45"
+                  class="w-full px-4 py-2.5 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Statusi</label>
+                <select name="status"
+                  class="w-full px-4 py-2.5 rounded-xl bg-slate-700 border border-slate-600 text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none">
+                  <option value="E Lirë">E Lirë</option>
+                  <option value="Me Qira">Me Qira</option>
+                  <option value="Në Servis">Në Servis</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Karburanti (%)</label>
+                <input required type="number" name="fuel" min="0" max="100" placeholder="100"
+                  class="w-full px-4 py-2.5 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Kilometrazhi</label>
+                <input required type="number" name="mileage" placeholder="0"
+                  class="w-full px-4 py-2.5 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-1">URL e Fotos</label>
+              <input required type="url" name="image" placeholder="https://example.com/car.jpg"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none">
+            </div>
+          </div>
+        </div>
+        <div class="pt-4 flex gap-3 border-t border-slate-700">
+          <button type="button" onclick="closeAddCarModal()"
+            class="flex-1 px-4 py-3 rounded-xl border border-slate-600 text-slate-300 font-medium hover:bg-slate-700 transition-all duration-300 active:scale-95">Anulo</button>
+          <button type="submit"
+            class="flex-1 px-4 py-3 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 shadow-xl hover:shadow-indigo-500/50 transition-all duration-300 active:scale-95">Ruaj
+            Veturën</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md">
+    <div class="bg-slate-800 rounded-3xl w-full max-w-md shadow-2xl border border-slate-700 modal-enter">
+      <div class="p-6 border-b border-slate-700 flex justify-between items-center">
+        <div>
+          <h3 class="text-xl font-bold text-white">Rezervo Veturën</h3>
+          <p class="text-sm text-slate-400">Rezervim i Ri</p>
+        </div>
+        <button onclick="closeBookingModal()" class="p-2 rounded-full hover:bg-slate-700 text-slate-400">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <form id="bookingForm" class="p-6 space-y-5">
+        <div class="p-4 bg-indigo-900/20 rounded-xl border border-indigo-800 space-y-3">
+          <div class="flex items-center gap-2 text-indigo-400 font-semibold mb-1">
+            <i data-lucide="calendar-days" class="w-4.5 h-4.5"></i>
+            <span>Hapi 1: Zgjidh Datat</span>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Fillimi</label>
+              <input required type="date" name="startDate"
+                class="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white shadow-sm text-sm focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Mbarimi</label>
+              <input required type="date" name="endDate"
+                class="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white shadow-sm text-sm focus:ring-2 focus:ring-indigo-500">
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2">Hapi 2: Detajet e Klientit</label>
+          <div class="space-y-3">
+            <input required type="text" name="clientName" placeholder="Emri Mbiemri"
+              class="w-full px-4 py-2 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none">
+            <input required type="text" name="clientId" placeholder="Nr. i Letërnjoftimit"
+              class="w-full px-4 py-2 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-1">Hapi 3: Zgjidh Veturën</label>
+          <div id="availableCarsContainer"
+            class="max-h-64 overflow-y-auto border border-slate-600 rounded-xl p-3 bg-slate-700">
+            <p class="text-sm text-slate-400 italic text-center py-8">Zgjidhni datat fillimisht për të parë veturat e
+              lira.</p>
+          </div>
+        </div>
+        <button type="submit"
+          class="w-full py-3 mt-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 active:scale-95">Konfirmo
+          Rezervimin</button>
+        <p class="text-center text-xs text-slate-400">Statusi fillestar do të jetë "Në Pritje"</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Authentication Modal -->
+  <div id="authModal"
+    class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/95 backdrop-blur-lg">
+    <div class="bg-slate-800 rounded-3xl w-full max-w-md shadow-2xl border border-slate-700 modal-enter">
+      <div class="p-8 text-center">
+        <div
+          class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+          <i data-lucide="shield-check" class="w-8 h-8 text-white"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-2">Mirësevini në DUA Rent</h2>
+        <p class="text-slate-400 mb-8">Si dëshironi të vazhdoni?</p>
+
+        <div class="space-y-3">
+          <button onclick="loginAsGuest()"
+            class="w-full py-3 px-4 rounded-xl bg-slate-700 border border-slate-600 text-white font-medium hover:bg-slate-600 transition-all duration-300 active:scale-95 flex items-center justify-center gap-2">
+            <i data-lucide="user" class="w-5 h-5"></i>
+            <span>Vazhdo si Vizitor (Guest)</span>
+          </button>
+
+          <button onclick="showAdminLogin()"
+            class="w-full py-3 px-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 active:scale-95 flex items-center justify-center gap-2">
+            <i data-lucide="shield" class="w-5 h-5"></i>
+            <span>Hyni si Administrator</span>
+          </button>
+        </div>
+
+        <!-- Admin Password Input (Hidden by default) -->
+        <div id="adminPasswordSection" class="hidden mt-6 space-y-3">
+          <div class="p-4 bg-slate-900/50 rounded-xl border border-slate-700">
+            <label class="block text-sm font-medium text-slate-300 mb-2">Fjalëkalimi i Administratorit</label>
+            <input type="password" id="adminPassword" placeholder="Shkruani fjalëkalimin..."
+              class="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 outline-none"
+              onkeypress="if(event.key === 'Enter') loginAsAdmin()">
+            <p class="text-xs text-slate-500 mt-2">Demo: admin123</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="hideAdminLogin()"
+              class="flex-1 py-2 px-4 rounded-lg border border-slate-600 text-slate-300 font-medium hover:bg-slate-700 transition-all duration-300">
+              Anulo
+            </button>
+            <button onclick="loginAsAdmin()"
+              class="flex-1 py-2 px-4 rounded-lg bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all duration-300">
+              Hyr
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
+
+  <script>
+    // State
+    let cars = JSON.parse(localStorage.getItem('duarent_cars') || '[]');
+    let bookings = JSON.parse(localStorage.getItem('duarent_bookings') || '[]');
+    let currentView = 'dashboard';
+    let selectedCarId = null; // Track selected car for booking
+    let userRole = null; // 'guest' or 'admin'
+
+    // Authentication Functions
+    function showAdminLogin() {
+      document.getElementById('adminPasswordSection').classList.remove('hidden');
+    }
+
+    function hideAdminLogin() {
+      document.getElementById('adminPasswordSection').classList.add('hidden');
+      document.getElementById('adminPassword').value = '';
+    }
+
+    function loginAsGuest() {
+      userRole = 'guest';
+      closeAuthModal();
+      showToast('Mirësevini si Vizitor!', 'info');
+      navigateTo('fleet'); // Guests start at fleet view
+      updateUIForRole();
+    }
+
+    function loginAsAdmin() {
+      const password = document.getElementById('adminPassword').value;
+      if (password === 'admin123') {
+        userRole = 'admin';
+        closeAuthModal();
+        showToast('Mirësevini, Administrator!', 'success');
+        navigateTo('dashboard');
+        updateUIForRole();
+      } else {
+        showToast('Fjalëkalim i gabuar!', 'error');
+        document.getElementById('adminPassword').value = '';
+      }
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
+    function updateUIForRole() {
+      const dashboardBtn = document.querySelector('[data-tab="dashboard"]');
+      const bookingsBtn = document.querySelector('[data-tab="bookings"]');
+      const clientsBtn = document.querySelector('[data-tab="clients"]');
+
+      if (userRole === 'guest') {
+        // Hide admin-only menu items
+        if (dashboardBtn) dashboardBtn.classList.add('hidden');
+        if (bookingsBtn) bookingsBtn.classList.add('hidden');
+        if (clientsBtn) clientsBtn.classList.add('hidden');
+      } else {
+        // Show all menu items for admin
+        if (dashboardBtn) dashboardBtn.classList.remove('hidden');
+        if (bookingsBtn) bookingsBtn.classList.remove('hidden');
+        if (clientsBtn) clientsBtn.classList.remove('hidden');
+      }
+    }
+
+    // Helpers
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      const [y, m, d] = dateStr.split('-');
+      return `${d}.${m}.${y}`;
+    }
+
+    function getTodayISO() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function saveData() {
+      localStorage.setItem('duarent_cars', JSON.stringify(cars));
+      localStorage.setItem('duarent_bookings', JSON.stringify(bookings));
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      const icons = {
+        success: '✅',
+        error: '❌',
+        info: 'ℹ️',
+        warning: '⚠️'
+      };
+      const colors = {
+        success: 'bg-emerald-600 border-emerald-500',
+        error: 'bg-rose-600 border-rose-500',
+        info: 'bg-blue-600 border-blue-500',
+        warning: 'bg-amber-600 border-amber-500'
+      };
+
+      toast.className = `toast-enter flex items-center gap-3 px-4 py-3 rounded-xl ${colors[type]} border text-white shadow-2xl min-w-[300px] max-w-md`;
+      toast.innerHTML = `
+        <span class="text-xl">${icons[type]}</span>
+        <span class="flex-1 font-medium text-sm">${message}</span>
+      `;
+
+      const container = document.getElementById('toastContainer');
+      container.appendChild(toast);
+
+      // Auto remove after 3 seconds
+      setTimeout(() => {
+        toast.classList.remove('toast-enter');
+        toast.classList.add('toast-exit');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Calculate Total Revenue from Approved Bookings
+    function calculateRevenue() {
+      return bookings.reduce((total, booking) => {
+        if (booking.status === 'approved') {
+          // Calculate days between start and end date
+          const start = new Date(booking.startDate);
+          const end = new Date(booking.endDate);
+          const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1; // +1 to include both days
+          const totalPrice = booking.price * days;
+          return total + totalPrice;
+        }
+        return total;
+      }, 0);
+    }
+
+    function autoSyncStatuses() {
+      const today = getTodayISO();
+      let changed = false;
+
+      cars = cars.map(car => {
+        if (car.status === 'Në Servis') return car;
+
+        const activeBooking = bookings.find(b => {
+          if (b.status !== 'approved') return false;
+          if (b.carId.toString() !== car.id.toString()) return false;
+          return today >= b.startDate && today <= b.endDate;
+        });
+
+        if (activeBooking && car.status !== 'Me Qira') {
+          changed = true;
+          return { ...car, status: 'Me Qira' };
+        } else if (!activeBooking && car.status === 'Me Qira') {
+          changed = true;
+          return { ...car, status: 'E Lirë' };
+        }
+        return car;
+      });
+
+      if (changed) saveData();
+    }
+
+    // Navigation
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('-translate-x-full');
+    }
+
+    function navigateTo(view) {
+      // Role-based access control
+      if (userRole === 'guest' && (view === 'dashboard' || view === 'bookings' || view === 'clients')) {
+        showToast('Aksesi i kufizuar! Vetëm për administratorë.', 'warning');
+        return;
+      }
+
+      currentView = view;
+
+      // Remove animation class from all views first
+      document.querySelectorAll('.view-content').forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('animate-fade-in-up');
+      });
+
+      // Show and animate the target view
+      const targetView = document.getElementById(`view-${view}`);
+      targetView.classList.remove('hidden');
+      // Force reflow to restart animation
+      void targetView.offsetWidth;
+      targetView.classList.add('animate-fade-in-up');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-indigo-600/10', 'text-indigo-400', 'shadow-md');
+        btn.classList.add('text-slate-400');
+      });
+
+      const activeBtn = document.querySelector(`[data-tab="${view}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-indigo-600/10', 'text-indigo-400', 'shadow-md');
+        activeBtn.classList.remove('text-slate-400');
+      }
+
+      render();
+      if (window.innerWidth < 1024) toggleSidebar();
+    }
+
+    // Modals
+    function openAddCarModal() {
+      document.getElementById('addCarModal').classList.remove('hidden');
+      document.getElementById('addCarModal').classList.add('flex');
+      lucide.createIcons();
+    }
+
+    function closeAddCarModal() {
+      document.getElementById('addCarModal').classList.add('hidden');
+      document.getElementById('addCarModal').classList.remove('flex');
+      document.getElementById('addCarForm').reset();
+    }
+
+    function openBookingModal() {
+      document.getElementById('bookingModal').classList.remove('hidden');
+      document.getElementById('bookingModal').classList.add('flex');
+      updateAvailableCars();
+      lucide.createIcons();
+    }
+
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.add('hidden');
+      document.getElementById('bookingModal').classList.remove('flex');
+      document.getElementById('bookingForm').reset();
+      selectedCarId = null;
+      document.getElementById('availableCarsContainer').innerHTML = '<p class="text-sm text-slate-400 italic text-center py-8">Zgjidhni datat fillimisht për të parë veturat e lira.</p>';
+    }
+
+    function updateAvailableCars() {
+      const form = document.getElementById('bookingForm');
+      const startDate = form.startDate.value;
+      const endDate = form.endDate.value;
+      const container = document.getElementById('availableCarsContainer');
+
+      if (!startDate || !endDate) {
+        container.innerHTML = '<p class="text-sm text-slate-400 italic text-center py-8">Zgjidhni datat fillimisht për të parë veturat e lira.</p>';
+        selectedCarId = null;
+        return;
+      }
+
+      const available = cars.filter(car => {
+        if (car.status === 'Në Servis') return false;
+        const hasConflict = bookings.some(b => {
+          if (b.status === 'E Përfunduar' || b.status === 'rejected') return false;
+          if (b.carId.toString() !== car.id.toString()) return false;
+          return startDate <= b.endDate && endDate >= b.startDate;
+        });
+        return !hasConflict;
+      });
+
+      if (available.length === 0) {
+        container.innerHTML = '<p class="text-sm text-rose-600 text-center py-8 font-medium">Asnjë veturë nuk është e lirë për këto data.</p>';
+        selectedCarId = null;
+        return;
+      }
+
+      container.innerHTML = '<div class="grid grid-cols-1 gap-3">' +
+        available.map(c => `
+          <div onclick="selectCarForBooking(${c.id})" 
+               data-car-id="${c.id}"
+               class="car-option cursor-pointer p-3 border-2 border-slate-600 rounded-lg hover:border-indigo-500 transition-all duration-200 bg-slate-800">
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <h4 class="font-bold text-white">${c.name}</h4>
+                <p class="text-xs text-slate-400 font-mono">${c.plate}</p>
+              </div>
+              <div class="text-right">
+                <p class="text-lg font-bold text-indigo-400">€${c.price}</p>
+                <p class="text-xs text-slate-500">/ ditë</p>
+              </div>
+            </div>
+            <div class="flex gap-3 mt-2 text-xs text-slate-400">
+              <span class="flex items-center gap-1">
+                <i data-lucide="fuel" class="w-3 h-3"></i> ${c.fuel}%
+              </span>
+              <span class="flex items-center gap-1">
+                <i data-lucide="gauge" class="w-3 h-3"></i> ${parseInt(c.mileage).toLocaleString()} km
+              </span>
+            </div>
+          </div>
+        `).join('') + '</div>';
+
+      lucide.createIcons();
+      selectedCarId = null;
+    }
+
+    function selectCarForBooking(carId) {
+      selectedCarId = carId;
+
+      // Update visual feedback
+      document.querySelectorAll('.car-option').forEach(el => {
+        if (el.dataset.carId === carId.toString()) {
+          el.classList.remove('border-slate-200');
+          el.classList.add('border-indigo-600', 'ring-2', 'ring-indigo-200', 'bg-indigo-50');
+        } else {
+          el.classList.remove('border-indigo-600', 'ring-2', 'ring-indigo-200', 'bg-indigo-50');
+          el.classList.add('border-slate-200');
+        }
+      });
+    }
+
+    // Form Handlers
+    document.getElementById('addCarForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const newCar = {
+        id: Date.now(),
+        name: formData.get('name'),
+        plate: formData.get('plate').toUpperCase(),
+        price: formData.get('price'),
+        status: formData.get('status'),
+        fuel: formData.get('fuel'),
+        mileage: formData.get('mileage'),
+        image: formData.get('image')
+      };
+      cars.unshift(newCar);
+      saveData();
+      closeAddCarModal();
+      showToast('Vetura u shtua me sukses!', 'success');
+      navigateTo('fleet');
+    });
+
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (!selectedCarId) {
+        showToast('Ju lutem zgjidhni një veturë duke klikuar mbi të!', 'warning');
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const car = cars.find(c => c.id.toString() === selectedCarId.toString());
+      if (!car) return;
+
+      const newBooking = {
+        id: `#BK-${Math.floor(1000 + Math.random() * 9000)}`,
+        client: formData.get('clientName'),
+        clientId: formData.get('clientId'),
+        carId: car.id,
+        car: car.name,
+        startDate: formData.get('startDate'),
+        endDate: formData.get('endDate'),
+        status: 'pending',
+        paymentStatus: 'E Papaguar',
+        price: car.price
+      };
+      bookings.unshift(newBooking);
+      saveData();
+      autoSyncStatuses();
+      closeBookingModal();
+      showToast('Rezervimi u krijua me sukses!', 'success');
+      navigateTo('bookings');
+    });
+
+    document.getElementById('bookingForm').addEventListener('change', updateAvailableCars);
+
+    // Booking Actions
+    function approveBooking(id) {
+      bookings = bookings.map(b => b.id === id ? { ...b, status: 'approved' } : b);
+      saveData();
+      autoSyncStatuses();
+      render();
+    }
+
+    function rejectBooking(id) {
+      bookings = bookings.map(b => b.id === id ? { ...b, status: 'rejected' } : b);
+      saveData();
+      showToast('Rezervimi u refuzua!', 'info');
+      render();
+    }
+
+    function deleteBooking(id) {
+      bookings = bookings.filter(b => b.id !== id);
+      saveData();
+      autoSyncStatuses();
+      showToast('Rezervimi u fshi!', 'info');
+      render();
+    }
+
+    // Render Functions
+    function renderStats() {
+      const total = cars.length;
+      const available = cars.filter(c => c.status === 'E Lirë').length;
+      const rented = cars.filter(c => c.status === 'Me Qira').length;
+      const revenue = calculateRevenue();
+
+      return `
+                <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/20 cursor-pointer">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-slate-400">Totali i Veturave</p>
+                            <h3 class="text-2xl font-bold text-white mt-1">${total}</h3>
+                        </div>
+                        <div class="p-2.5 rounded-2xl bg-blue-500/20 text-blue-400">
+                            <i data-lucide="car" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/20 cursor-pointer">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-slate-400">Të Lira Tani</p>
+                            <h3 class="text-2xl font-bold text-white mt-1">${available}</h3>
+                        </div>
+                        <div class="p-2.5 rounded-2xl bg-emerald-500/20 text-emerald-400">
+                            <i data-lucide="car" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-violet-500/20 cursor-pointer">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-slate-400">Me Qira Aktive</p>
+                            <h3 class="text-2xl font-bold text-white mt-1">${rented}</h3>
+                        </div>
+                        <div class="p-2.5 rounded-2xl bg-violet-500/20 text-violet-400">
+                            <i data-lucide="calendar-days" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/20 cursor-pointer">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-slate-400">Të Hyrat Totale</p>
+                            <h3 class="text-2xl font-bold text-emerald-400 mt-1">€${revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                        </div>
+                        <div class="p-2.5 rounded-2xl bg-emerald-500/20 text-emerald-400">
+                            <i data-lucide="wallet" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
+    }
+
+    function renderBookingsTable(bookingsList = bookings) {
+      if (bookingsList.length === 0) {
+        return `
+                    <div class="bg-slate-800 rounded-3xl border border-slate-700 shadow-sm p-12 text-center">
+                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center mb-3 mx-auto">
+                            <i data-lucide="calendar-x" class="w-6 h-6 text-slate-400"></i>
+                        </div>
+                        <p class="text-white font-medium">Nuk ka rezervime</p>
+                        <p class="text-slate-400 text-sm mt-1">Rezervimet e reja do të shfaqen këtu.</p>
+                    </div>
+                `;
+      }
+
+      const statusBadge = (status) => {
+        const styles = {
+          'approved': 'bg-emerald-100 text-emerald-700',
+          'pending': 'bg-amber-100 text-amber-700',
+          'rejected': 'bg-rose-100 text-rose-700',
+          'E Përfunduar': 'bg-slate-100 text-slate-700'
+        };
+        const labels = {
+          'approved': 'E Aprovuar',
+          'pending': 'Në Pritje',
+          'rejected': 'E Refuzuar',
+          'E Përfunduar': 'E Përfunduar'
+        };
+        return `<span class="px-2.5 py-1 rounded-full text-xs font-semibold ${styles[status]}">${labels[status]}</span>`;
+      };
+
+      const rows = bookingsList.map(b => {
+        // Calculate total price (days * daily price)
+        const start = new Date(b.startDate);
+        const end = new Date(b.endDate);
+        const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+        const totalPrice = b.price * days;
+
+        return `
+                <tr class="hover:bg-slate-700/50 transition-colors">
+                    <td class="px-6 py-4 text-sm font-medium text-white">${b.id}</td>
+                    <td class="px-6 py-4 text-sm text-slate-300">${b.client}</td>
+                    <td class="px-6 py-4 text-sm font-mono text-slate-400">${b.clientId || '-'}</td>
+                    <td class="px-6 py-4 text-sm text-slate-300">${b.car}</td>
+                    <td class="px-6 py-4 text-sm text-slate-400">${formatDate(b.startDate)} - ${formatDate(b.endDate)}</td>
+                    <td class="px-6 py-4">${statusBadge(b.status)}</td>
+                    <td class="px-6 py-4 text-sm font-bold text-emerald-400">€${totalPrice.toFixed(2)}</td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex justify-end gap-2">
+                            ${b.status === 'pending' ? `
+                                <button onclick="approveBooking('${b.id}')" class="p-2 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-100" title="Aprovo">
+                                    <i data-lucide="check" class="w-4.5 h-4.5"></i>
+                                </button>
+                                <button onclick="rejectBooking('${b.id}')" class="p-2 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100" title="Refuzo">
+                                    <i data-lucide="x-circle" class="w-4.5 h-4.5"></i>
+                                </button>
+                            ` : ''}
+                            <button onclick="deleteBooking('${b.id}')" class="p-2 rounded-lg bg-slate-50 text-slate-500 hover:bg-rose-50 hover:text-rose-600" title="Fshij">
+                                <i data-lucide="trash-2" class="w-4.5 h-4.5"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+      }).join('');
+
+      return `
+                <div class="bg-slate-800 rounded-3xl border border-slate-700 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-slate-700">
+                        <h3 class="text-lg font-bold text-white">Rezervimet e Fundit</h3>
+                        <p class="text-sm text-slate-400">Menaxho aktivitetin tënd</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-900/50 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-4">ID</th>
+                                    <th class="px-6 py-4">Klienti</th>
+                                    <th class="px-6 py-4">Nr. ID</th>
+                                    <th class="px-6 py-4">Vetura</th>
+                                    <th class="px-6 py-4">Datat</th>
+                                    <th class="px-6 py-4">Statusi</th>
+                                    <th class="px-6 py-4">Totali</th>
+                                    <th class="px-6 py-4 text-right">Veprime</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700">${rows}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+    }
+
+    function renderCars() {
+      if (cars.length === 0) {
+        return `
+                    <div class="col-span-full flex flex-col items-center justify-center py-20 bg-slate-800 rounded-3xl border border-dashed border-slate-700 text-center">
+                        <div class="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mb-4">
+                            <i data-lucide="car" class="w-8 h-8 text-slate-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Nuk ka vetura në flotë</h3>
+                        <p class="text-slate-400 max-w-xs mx-auto mt-2">Flota juaj është bosh. Shtoni veturën tuaj të parë për të filluar.</p>
+                    </div>
+                `;
+      }
+
+      return cars.map(car => {
+        const statusColors = {
+          'E Lirë': 'bg-emerald-500/90 text-white',
+          'Me Qira': 'bg-violet-500/90 text-white',
+          'Në Servis': 'bg-amber-500/90 text-white'
+        };
+
+        return `
+                    <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                        <div class="h-48 bg-slate-900 relative overflow-hidden">
+                            <img src="${car.image}" alt="${car.name}" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                            <div class="absolute top-3 right-3 px-2 py-1 bg-slate-900/90 backdrop-blur-sm rounded-lg text-xs font-bold text-white">€${car.price}</div>
+                            <div class="absolute top-3 left-3 px-2 py-1 rounded-lg text-xs font-semibold ${statusColors[car.status]}">${car.status}</div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-white text-lg">${car.name}</h3>
+                            <p class="text-sm text-slate-400 font-mono">${car.plate}</p>
+                            <div class="grid grid-cols-2 gap-4 my-4">
+                                <div class="flex items-center gap-2 text-xs text-slate-400">
+                                    <i data-lucide="fuel" class="w-3.5 h-3.5 text-indigo-500"></i>
+                                    <span>${car.fuel}%</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs text-slate-400">
+                                    <i data-lucide="gauge" class="w-3.5 h-3.5 text-indigo-500"></i>
+                                    <span>${parseInt(car.mileage).toLocaleString()} km</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+      }).join('');
+    }
+
+    function renderClients() {
+      const clientsMap = new Map();
+      bookings.forEach(b => {
+        const key = b.clientId || b.client;
+        if (!key) return;
+        if (clientsMap.has(key)) {
+          clientsMap.get(key).count++;
+        } else {
+          clientsMap.set(key, { name: b.client, id: b.clientId || 'N/A', count: 1 });
+        }
+      });
+
+      const clients = Array.from(clientsMap.values());
+
+      if (clients.length === 0) {
+        return `
+                    <div class="bg-slate-800 rounded-3xl border border-slate-700 shadow-sm p-12 text-center">
+                        <div class="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <i data-lucide="users" class="w-8 h-8 text-slate-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Ende nuk ka klientë</h3>
+                        <p class="text-slate-400 max-w-xs mx-auto mt-2">Klientët do të shfaqen këtu automatikisht sapo të krijoni rezervime.</p>
+                    </div>
+                `;
+      }
+
+      const rows = clients.map(c => `
+                <tr class="hover:bg-slate-700/50 transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400 font-bold text-sm">
+                                ${c.name.charAt(0).toUpperCase()}
+                            </div>
+                            <span class="font-medium text-white">${c.name}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-mono text-slate-400">${c.id}</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-slate-700 text-white text-sm font-bold">${c.count}</span>
+                    </td>
+                </tr>
+            `).join('');
+
+      return `
+                <div class="bg-slate-800 rounded-3xl border border-slate-700 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-900/50 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-4">Emri i Klientit</th>
+                                    <th class="px-6 py-4">Nr. ID</th>
+                                    <th class="px-6 py-4 text-center">Rezervime (Totali)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700">${rows}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+    }
+
+    function render() {
+      if (currentView === 'dashboard') {
+        document.getElementById('statsGrid').innerHTML = renderStats();
+        document.getElementById('dashboardBookings').innerHTML = renderBookingsTable(bookings.slice(0, 10));
+      } else if (currentView === 'fleet') {
+        document.getElementById('carsGrid').innerHTML = renderCars();
+        document.getElementById('fleetSubtitle').textContent = cars.length > 0 ? `Menaxho ${cars.length} vetura aktive` : 'Menaxho flotën tënde';
+      } else if (currentView === 'bookings') {
+        document.getElementById('bookingsTable').innerHTML = renderBookingsTable();
+      } else if (currentView === 'clients') {
+        document.getElementById('clientsTable').innerHTML = renderClients();
+      }
+      lucide.createIcons();
+    }
+
+    // Initialize
+    function init() {
+      const now = new Date();
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('sq-AL', { weekday: 'short', month: 'short', day: 'numeric' });
+
+      autoSyncStatuses();
+      // Don't auto-navigate - let user authenticate first
+      // Auth modal will handle initial navigation
+      lucide.createIcons();
+    }
+
+    init();
+  </script>
+</body>
+
+</html>
