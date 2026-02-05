@@ -159,6 +159,82 @@
     <div id="contentArea" class="flex-1 overflow-y-auto p-8"></div>
   </main>
 
+  <!-- Add Car Modal -->
+  <div id="addCarModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
+    <div
+      class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-2xl w-full p-8 fade-in mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-white">Shto Veturë të Re</h2>
+        <button onclick="window.closeAddCarModal()" class="text-slate-400 hover:text-white transition-all">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Emri i Veturës</label>
+            <input type="text" id="carName" placeholder="p.sh. BMW X5"
+              class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Targë</label>
+            <input type="text" id="carPlate" placeholder="p.sh. 01-ABC-123"
+              class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Çmimi (€/ditë)</label>
+            <input type="number" id="carPrice" placeholder="50"
+              class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Lloji i Karburantit</label>
+            <select id="carFuelType"
+              class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500 outline-none">
+              <option value="Naftë">Naftë</option>
+              <option value="Benzinë">Benzinë</option>
+              <option value="Elektrik">Elektrik</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Kilometrazhi (km)</label>
+            <input type="number" id="carMileage" placeholder="50000"
+              class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Niveli i Karburantit (%)</label>
+            <input type="number" id="carFuelLevel" placeholder="75" min="0" max="100"
+              class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2">URL e Imazhit</label>
+          <input type="url" id="carImage" placeholder="https://example.com/car-image.jpg"
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
+        </div>
+
+        <div class="flex gap-3 mt-6">
+          <button onclick="window.saveNewCar()"
+            class="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all shadow-lg">
+            <i data-lucide="save" class="w-4 h-4 inline mr-2"></i>
+            Ruaj Veturën
+          </button>
+          <button onclick="window.closeAddCarModal()"
+            class="px-6 py-3 border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white rounded-xl font-medium transition-all">
+            Anulo
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast -->
   <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
     <div
@@ -556,8 +632,62 @@
     };
 
     window.openAddCarModal = () => {
-      showToast('Funksioni "Shto Veturë" do të implementohet së shpejti!');
-      // TODO: Implement Add Car Modal
+      document.getElementById('addCarModal').classList.remove('hidden');
+      // Clear previous inputs
+      document.getElementById('carName').value = '';
+      document.getElementById('carPlate').value = '';
+      document.getElementById('carPrice').value = '';
+      document.getElementById('carFuelType').value = 'Naftë';
+      document.getElementById('carMileage').value = '';
+      document.getElementById('carFuelLevel').value = '';
+      document.getElementById('carImage').value = '';
+      lucide.createIcons();
+    };
+
+    window.closeAddCarModal = () => {
+      document.getElementById('addCarModal').classList.add('hidden');
+    };
+
+    window.saveNewCar = async () => {
+      const name = document.getElementById('carName').value.trim();
+      const plate = document.getElementById('carPlate').value.trim();
+      const price = parseFloat(document.getElementById('carPrice').value);
+      const fuelType = document.getElementById('carFuelType').value;
+      const mileage = parseFloat(document.getElementById('carMileage').value);
+      const fuel = parseFloat(document.getElementById('carFuelLevel').value);
+      const image = document.getElementById('carImage').value.trim();
+
+      // Validation
+      if (!name || !plate || !price || !mileage || !fuel || !image) {
+        showToast('Ju lutem plotësoni të gjitha fushat!');
+        return;
+      }
+
+      if (price <= 0 || mileage < 0 || fuel < 0 || fuel > 100) {
+        showToast('Vlerat numerike janë të pavlefshme!');
+        return;
+      }
+
+      try {
+        // Add to Firestore
+        await addDoc(collection(db, 'cars'), {
+          name: name,
+          plate: plate,
+          price: price,
+          fuelType: fuelType,
+          mileage: mileage,
+          fuel: fuel,
+          image: image,
+          status: 'E Lirë',
+          createdAt: new Date().toISOString()
+        });
+
+        showToast('Vetura u shtua me sukses!');
+        closeAddCarModal();
+      } catch (error) {
+        console.error('Error adding car:', error);
+        showToast('Gabim gjatë shtimit të veturës!');
+      }
     };
 
     function setActiveNav(id) {
