@@ -191,7 +191,7 @@
 
     let cars = [];
     let bookings = [];
-    let userRole = null;
+    let currentUserRole = null;
     let currentPage = 'cars';
 
     // Firestore Listeners
@@ -205,13 +205,13 @@
       renderCurrentPage();
     });
 
-    // Auth State
+    // Auth State - CRITICAL FIX
     onAuthStateChanged(auth, (user) => {
-      if (user && !userRole) {
-        userRole = 'admin';
+      if (user && !currentUserRole) {
+        currentUserRole = 'admin';
         closeLoginModal();
         updateUIForRole();
-        renderDashboard();
+        renderCars(); // FORCE RE-RENDER to show admin buttons
       }
     });
 
@@ -231,9 +231,9 @@
     }
 
     function updateUIForRole() {
-      document.getElementById('userRoleBadge').textContent = userRole === 'admin' ? 'Administrator' : 'Guest Mode';
+      document.getElementById('userRoleBadge').textContent = currentUserRole === 'admin' ? 'Administrator' : 'Guest Mode';
       document.querySelectorAll('.admin-only').forEach(el => {
-        el.classList.toggle('hidden', userRole !== 'admin');
+        el.classList.toggle('hidden', currentUserRole !== 'admin');
       });
     }
 
@@ -246,7 +246,7 @@
 
     // Authentication
     window.loginAsGuest = () => {
-      userRole = 'guest';
+      currentUserRole = 'guest';
       closeLoginModal();
       updateUIForRole();
       renderCars();
@@ -266,10 +266,10 @@
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        userRole = 'admin';
+        currentUserRole = 'admin';
         closeLoginModal();
         updateUIForRole();
-        renderDashboard();
+        renderCars(); // FORCE RE-RENDER to show admin buttons
         showToast('Mirësevini, Administrator!');
       } catch (error) {
         errorEl.textContent = 'Email ose fjalëkalim gabim!';
@@ -278,7 +278,7 @@
     };
 
     window.handleLogout = async () => {
-      if (userRole === 'admin') {
+      if (currentUserRole === 'admin') {
         await signOut(auth);
       }
       location.reload();
@@ -286,7 +286,7 @@
 
     // Render Functions
     window.renderDashboard = () => {
-      if (userRole !== 'admin') return;
+      if (currentUserRole !== 'admin') return;
       currentPage = 'dashboard';
       setActiveNav('nav-dashboard');
       document.getElementById('pageTitle').textContent = 'Dashboard';
@@ -351,6 +351,7 @@
       lucide.createIcons();
     };
 
+    // CRITICAL FIX - renderCars with Admin Button Logic
     window.renderCars = () => {
       currentPage = 'cars';
       setActiveNav('nav-cars');
@@ -363,7 +364,21 @@
         'Në Servis': 'bg-amber-500'
       };
 
-      document.getElementById('contentArea').innerHTML = cars.length === 0 ?
+      // CRITICAL FIX: Admin "Shto Veturë" Button
+      let adminAddButton = '';
+      if (currentUserRole === 'admin') {
+        adminAddButton = `
+          <div class="flex justify-end mb-6">
+            <button onclick="window.openAddCarModal()" 
+              class="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all shadow-lg">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+              Shto Veturë
+            </button>
+          </div>
+        `;
+      }
+
+      document.getElementById('contentArea').innerHTML = adminAddButton + (cars.length === 0 ?
         `<div class="text-center py-20">
                     <i data-lucide="car" class="w-16 h-16 text-slate-600 mx-auto mb-4"></i>
                     <p class="text-slate-400">Nuk ka vetura</p>
@@ -375,6 +390,12 @@
                                 <img src="${car.image}" alt="${car.name}" class="w-full h-full object-cover">
                                 <span class="absolute top-3 left-3 px-3 py-1 ${statusColors[car.status]} text-white text-xs font-bold rounded-full">${car.status}</span>
                                 <span class="absolute top-3 right-3 px-3 py-1 bg-slate-900/90 text-white text-xs font-bold rounded-full">€${car.price}/ditë</span>
+                                ${currentUserRole === 'admin' ? `
+                                  <button onclick="window.deleteCar('${car.firestoreId}')" 
+                                    class="absolute bottom-3 right-3 p-2 bg-red-500/90 hover:bg-red-600 text-white rounded-lg transition-all shadow-lg">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                  </button>
+                                ` : ''}
                             </div>
                             <div class="p-4">
                                 <h3 class="font-bold text-white text-lg">${car.name}</h3>
@@ -390,12 +411,12 @@
                             </div>
                         </div>
                     `).join('')}
-                </div>`;
+                </div>`);
       lucide.createIcons();
     };
 
     window.renderBookings = () => {
-      if (userRole !== 'admin') return;
+      if (currentUserRole !== 'admin') return;
       currentPage = 'bookings';
       setActiveNav('nav-bookings');
       document.getElementById('pageTitle').textContent = 'Rezervimet';
@@ -456,7 +477,7 @@
     };
 
     window.renderClients = () => {
-      if (userRole !== 'admin') return;
+      if (currentUserRole !== 'admin') return;
       currentPage = 'clients';
       setActiveNav('nav-clients');
       document.getElementById('pageTitle').textContent = 'Klientët';
@@ -525,6 +546,18 @@
     window.deleteBooking = async (id) => {
       await deleteDoc(doc(db, 'bookings', id));
       showToast('Rezervimi u fshi!');
+    };
+
+    window.deleteCar = async (id) => {
+      if (confirm('Jeni i sigurt që dëshironi të fshini këtë veturë?')) {
+        await deleteDoc(doc(db, 'cars', id));
+        showToast('Vetura u fshi!');
+      }
+    };
+
+    window.openAddCarModal = () => {
+      showToast('Funksioni "Shto Veturë" do të implementohet së shpejti!');
+      // TODO: Implement Add Car Modal
     };
 
     function setActiveNav(id) {
