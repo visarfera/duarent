@@ -45,12 +45,10 @@
   <!-- Login Modal -->
   <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 glass">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-8 fade-in">
-      <!-- DUA RENT Logo -->
       <div class="mb-6 flex justify-center">
         <img src="https://i.imgur.com/SZIoCrF.jpeg" alt="DUA Rent"
           class="h-24 w-auto object-contain rounded-lg shadow-xl">
       </div>
-
       <h2 class="text-3xl font-bold text-white text-center mb-2">Mirësevini</h2>
       <p class="text-slate-400 text-center mb-8">Sistemi i menaxhimit të flotës</p>
 
@@ -86,7 +84,6 @@
         </button>
       </div>
 
-      <!-- VEROS Branding -->
       <div class="mt-8 pt-6 border-t border-slate-800 flex items-center justify-center gap-2 opacity-50">
         <span class="text-xs text-slate-500">Powered by</span>
         <img src="https://i.imgur.com/oksiI1G.png" alt="VEROS" class="h-5">
@@ -134,8 +131,6 @@
         <i data-lucide="log-out" class="w-5 h-5"></i>
         <span class="font-medium">Dilni</span>
       </button>
-
-      <!-- VEROS Footer -->
       <div class="flex items-center justify-center gap-2 pt-3 border-t border-slate-800 opacity-40">
         <img src="https://i.imgur.com/oksiI1G.png" alt="VEROS" class="h-4">
         <span class="text-xs text-slate-500">© 2026 Developed by <span class="font-semibold">VEROS</span></span>
@@ -155,7 +150,6 @@
         <span id="currentDate" class="text-sm text-slate-300 font-medium"></span>
       </div>
     </header>
-
     <div id="contentArea" class="flex-1 overflow-y-auto p-8"></div>
   </main>
 
@@ -169,7 +163,6 @@
           <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
-
       <div class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -183,7 +176,6 @@
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
           </div>
         </div>
-
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Çmimi (€/ditë)</label>
@@ -200,7 +192,6 @@
             </select>
           </div>
         </div>
-
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Kilometrazhi (km)</label>
@@ -213,23 +204,63 @@
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
           </div>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-slate-300 mb-2">URL e Imazhit</label>
           <input type="url" id="carImage" placeholder="https://example.com/car-image.jpg"
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
         </div>
-
         <div class="flex gap-3 mt-6">
           <button onclick="window.saveNewCar()"
             class="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all shadow-lg">
-            <i data-lucide="save" class="w-4 h-4 inline mr-2"></i>
-            Ruaj Veturën
+            <i data-lucide="save" class="w-4 h-4 inline mr-2"></i>Ruaj Veturën
           </button>
           <button onclick="window.closeAddCarModal()"
-            class="px-6 py-3 border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white rounded-xl font-medium transition-all">
-            Anulo
+            class="px-6 py-3 border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white rounded-xl font-medium transition-all">Anulo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-lg w-full p-8 fade-in mx-4">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-white">Rezervo Veturën</h2>
+        <button onclick="window.closeBookingModal()" class="text-slate-400 hover:text-white transition-all">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <p id="bookingCarName" class="text-indigo-400 font-semibold mb-4"></p>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2">Emri i Klientit</label>
+          <input type="text" id="bookingClientName" placeholder="p.sh. Arben Hoxha"
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2">Nr. ID / Patentë</label>
+          <input type="text" id="bookingClientId" placeholder="p.sh. 1234567890"
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Data e Marrjes</label>
+            <input type="date" id="bookingStartDate"
+              class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Data e Kthimit</label>
+            <input type="date" id="bookingEndDate"
+              class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button onclick="window.saveBooking()"
+            class="flex-1 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold transition-all shadow-lg">
+            <i data-lucide="check" class="w-4 h-4 inline mr-2"></i>Konfirmo Rezervimin
           </button>
+          <button onclick="window.closeBookingModal()"
+            class="px-6 py-3 border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white rounded-xl font-medium transition-all">Anulo</button>
         </div>
       </div>
     </div>
@@ -269,6 +300,10 @@
     let bookings = [];
     let currentUserRole = null;
     let currentPage = 'cars';
+    let selectedCarForBooking = null;
+    let filterStartDate = '';
+    let filterEndDate = '';
+    let filteredCars = null;
 
     // Firestore Listeners
     onSnapshot(collection(db, 'cars'), (snapshot) => {
@@ -281,17 +316,17 @@
       renderCurrentPage();
     });
 
-    // Auth State - CRITICAL FIX
+    // Auth State
     onAuthStateChanged(auth, (user) => {
       if (user && !currentUserRole) {
         currentUserRole = 'admin';
         closeLoginModal();
         updateUIForRole();
-        renderCars(); // FORCE RE-RENDER to show admin buttons
+        renderCars();
       }
     });
 
-    // Helper Functions
+    // Helpers
     window.showToast = (msg) => {
       const toast = document.getElementById('toast');
       document.getElementById('toastMessage').textContent = msg;
@@ -320,6 +355,26 @@
       else if (currentPage === 'clients') renderClients();
     }
 
+    // Date overlap check
+    function datesOverlap(start1, end1, start2, end2) {
+      const s1 = new Date(start1), e1 = new Date(end1);
+      const s2 = new Date(start2), e2 = new Date(end2);
+      return s1 <= e2 && s2 <= e1;
+    }
+
+    function isCarAvailable(carId, startDate, endDate) {
+      if (!startDate || !endDate) return true;
+      const carBookings = bookings.filter(b =>
+        b.carId === carId && b.status === 'approved'
+      );
+      for (const booking of carBookings) {
+        if (datesOverlap(startDate, endDate, booking.startDate, booking.endDate)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
     // Authentication
     window.loginAsGuest = () => {
       currentUserRole = 'guest';
@@ -345,7 +400,7 @@
         currentUserRole = 'admin';
         closeLoginModal();
         updateUIForRole();
-        renderCars(); // FORCE RE-RENDER to show admin buttons
+        renderCars();
         showToast('Mirësevini, Administrator!');
       } catch (error) {
         errorEl.textContent = 'Email ose fjalëkalim gabim!';
@@ -360,7 +415,34 @@
       location.reload();
     };
 
-    // Render Functions
+    // Filter cars
+    window.filterAvailableCars = () => {
+      filterStartDate = document.getElementById('filterStartDate').value;
+      filterEndDate = document.getElementById('filterEndDate').value;
+
+      if (!filterStartDate || !filterEndDate) {
+        showToast('Ju lutem zgjidhni të dyja datat!');
+        return;
+      }
+
+      if (new Date(filterStartDate) > new Date(filterEndDate)) {
+        showToast('Data e marrjes duhet të jetë para datës së kthimit!');
+        return;
+      }
+
+      filteredCars = cars.filter(car => isCarAvailable(car.firestoreId, filterStartDate, filterEndDate));
+      renderCars();
+      showToast(`U gjetën ${filteredCars.length} vetura të lira!`);
+    };
+
+    window.clearFilter = () => {
+      filteredCars = null;
+      filterStartDate = '';
+      filterEndDate = '';
+      renderCars();
+    };
+
+    // Render Dashboard
     window.renderDashboard = () => {
       if (currentUserRole !== 'admin') return;
       currentPage = 'dashboard';
@@ -373,74 +455,89 @@
       const rented = cars.filter(c => c.status === 'Me Qira').length;
       const revenue = bookings.filter(b => b.status === 'approved').reduce((sum, b) => {
         const days = Math.ceil((new Date(b.endDate) - new Date(b.startDate)) / (1000 * 60 * 60 * 24)) + 1;
-        return sum + (b.price * days);
+        return sum + ((b.price || 0) * days);
       }, 0);
 
       document.getElementById('contentArea').innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-indigo-500/30 transition-all">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-slate-400 text-sm">Totali</p>
-                                <h3 class="text-3xl font-bold text-white mt-1">${total}</h3>
-                            </div>
-                            <div class="bg-blue-500/10 p-3 rounded-lg">
-                                <i data-lucide="car" class="w-6 h-6 text-blue-400"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-emerald-500/30 transition-all">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-slate-400 text-sm">Të Lira</p>
-                                <h3 class="text-3xl font-bold text-white mt-1">${available}</h3>
-                            </div>
-                            <div class="bg-emerald-500/10 p-3 rounded-lg">
-                                <i data-lucide="check-circle" class="w-6 h-6 text-emerald-400"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-violet-500/30 transition-all">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-slate-400 text-sm">Me Qira</p>
-                                <h3 class="text-3xl font-bold text-white mt-1">${rented}</h3>
-                            </div>
-                            <div class="bg-violet-500/10 p-3 rounded-lg">
-                                <i data-lucide="calendar-days" class="w-6 h-6 text-violet-400"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-emerald-500/30 transition-all">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-slate-400 text-sm">Të Hyrat</p>
-                                <h3 class="text-2xl font-bold text-emerald-400 mt-1">€${revenue.toFixed(2)}</h3>
-                            </div>
-                            <div class="bg-emerald-500/10 p-3 rounded-lg">
-                                <i data-lucide="wallet" class="w-6 h-6 text-emerald-400"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-indigo-500/30 transition-all">
+            <div class="flex justify-between items-start">
+              <div><p class="text-slate-400 text-sm">Totali</p><h3 class="text-3xl font-bold text-white mt-1">${total}</h3></div>
+              <div class="bg-blue-500/10 p-3 rounded-lg"><i data-lucide="car" class="w-6 h-6 text-blue-400"></i></div>
+            </div>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-emerald-500/30 transition-all">
+            <div class="flex justify-between items-start">
+              <div><p class="text-slate-400 text-sm">Të Lira</p><h3 class="text-3xl font-bold text-white mt-1">${available}</h3></div>
+              <div class="bg-emerald-500/10 p-3 rounded-lg"><i data-lucide="check-circle" class="w-6 h-6 text-emerald-400"></i></div>
+            </div>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-violet-500/30 transition-all">
+            <div class="flex justify-between items-start">
+              <div><p class="text-slate-400 text-sm">Me Qira</p><h3 class="text-3xl font-bold text-white mt-1">${rented}</h3></div>
+              <div class="bg-violet-500/10 p-3 rounded-lg"><i data-lucide="calendar-days" class="w-6 h-6 text-violet-400"></i></div>
+            </div>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-emerald-500/30 transition-all">
+            <div class="flex justify-between items-start">
+              <div><p class="text-slate-400 text-sm">Të Hyrat</p><h3 class="text-2xl font-bold text-emerald-400 mt-1">€${revenue.toFixed(2)}</h3></div>
+              <div class="bg-emerald-500/10 p-3 rounded-lg"><i data-lucide="wallet" class="w-6 h-6 text-emerald-400"></i></div>
+            </div>
+          </div>
+        </div>`;
       lucide.createIcons();
     };
 
-    // CRITICAL FIX - renderCars with Admin Button Logic
+    // Render Cars with Filter
     window.renderCars = () => {
       currentPage = 'cars';
       setActiveNav('nav-cars');
+
+      const carsToShow = filteredCars !== null ? filteredCars : cars;
       document.getElementById('pageTitle').textContent = 'Veturat';
-      document.getElementById('pageSubtitle').textContent = `Totali: ${cars.length} vetura`;
+      document.getElementById('pageSubtitle').textContent = filteredCars !== null
+        ? `${carsToShow.length} vetura të lira për datat e zgjedhura`
+        : `Totali: ${cars.length} vetura`;
 
-      const statusColors = {
-        'E Lirë': 'bg-emerald-500',
-        'Me Qira': 'bg-violet-500',
-        'Në Servis': 'bg-amber-500'
-      };
+      const statusColors = { 'E Lirë': 'bg-emerald-500', 'Me Qira': 'bg-violet-500', 'Në Servis': 'bg-amber-500' };
 
-      // CRITICAL FIX: Admin "Shto Veturë" Button
+      const today = new Date().toISOString().split('T')[0];
+
+      // Filter Bar HTML
+      const filterBar = `
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
+          <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+            <i data-lucide="search" class="w-5 h-5 text-indigo-400"></i>
+            Gjej Veturat e Lira
+          </h3>
+          <div class="flex flex-wrap items-end gap-4">
+            <div class="flex-1 min-w-[200px]">
+              <label class="block text-sm font-medium text-slate-400 mb-2">Data e Marrjes</label>
+              <input type="date" id="filterStartDate" value="${filterStartDate}" min="${today}"
+                class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+            <div class="flex-1 min-w-[200px]">
+              <label class="block text-sm font-medium text-slate-400 mb-2">Data e Kthimit</label>
+              <input type="date" id="filterEndDate" value="${filterEndDate}" min="${today}"
+                class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+            <button onclick="window.filterAvailableCars()"
+              class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all flex items-center gap-2">
+              <i data-lucide="search" class="w-4 h-4"></i>
+              Gjej Veturat e Lira
+            </button>
+            ${filteredCars !== null ? `
+              <button onclick="window.clearFilter()"
+                class="px-4 py-3 border border-slate-700 hover:border-red-500 text-slate-400 hover:text-red-400 rounded-xl transition-all flex items-center gap-2">
+                <i data-lucide="x" class="w-4 h-4"></i>
+                Pastro
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `;
+
+      // Admin Add Button
       let adminAddButton = '';
       if (currentUserRole === 'admin') {
         adminAddButton = `
@@ -454,43 +551,48 @@
         `;
       }
 
-      document.getElementById('contentArea').innerHTML = adminAddButton + (cars.length === 0 ?
+      // Car Grid
+      const carGrid = carsToShow.length === 0 ?
         `<div class="text-center py-20">
-                    <i data-lucide="car" class="w-16 h-16 text-slate-600 mx-auto mb-4"></i>
-                    <p class="text-slate-400">Nuk ka vetura</p>
-                </div>` :
+          <i data-lucide="car" class="w-16 h-16 text-slate-600 mx-auto mb-4"></i>
+          <p class="text-slate-400">${filteredCars !== null ? 'Nuk ka vetura të lira për këto data' : 'Nuk ka vetura'}</p>
+        </div>` :
         `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    ${cars.map(car => `
-                        <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-indigo-500/30 transition-all">
-                            <div class="h-48 bg-slate-800 relative">
-                                <img src="${car.image}" alt="${car.name}" class="w-full h-full object-cover">
-                                <span class="absolute top-3 left-3 px-3 py-1 ${statusColors[car.status]} text-white text-xs font-bold rounded-full">${car.status}</span>
-                                <span class="absolute top-3 right-3 px-3 py-1 bg-slate-900/90 text-white text-xs font-bold rounded-full">€${car.price}/ditë</span>
-                                ${currentUserRole === 'admin' ? `
-                                  <button onclick="window.deleteCar('${car.firestoreId}')" 
-                                    class="absolute bottom-3 right-3 p-2 bg-red-500/90 hover:bg-red-600 text-white rounded-lg transition-all shadow-lg">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                  </button>
-                                ` : ''}
-                            </div>
-                            <div class="p-4">
-                                <h3 class="font-bold text-white text-lg">${car.name}</h3>
-                                <p class="text-slate-400 text-sm font-mono">${car.plate}</p>
-                                <div class="flex gap-4 mt-3 text-xs text-slate-400">
-                                    <span class="flex items-center gap-1">
-                                        <i data-lucide="fuel" class="w-3 h-3"></i> ${car.fuel}%
-                                    </span>
-                                    <span class="flex items-center gap-1">
-                                        <i data-lucide="gauge" class="w-3 h-3"></i> ${parseInt(car.mileage).toLocaleString()} km
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>`);
+          ${carsToShow.map(car => `
+            <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-indigo-500/30 transition-all">
+              <div class="h-48 bg-slate-800 relative">
+                <img src="${car.image}" alt="${car.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
+                <span class="absolute top-3 left-3 px-3 py-1 ${statusColors[car.status] || 'bg-slate-600'} text-white text-xs font-bold rounded-full">${car.status || 'E Lirë'}</span>
+                <span class="absolute top-3 right-3 px-3 py-1 bg-slate-900/90 text-white text-xs font-bold rounded-full">€${car.price}/ditë</span>
+                ${currentUserRole === 'admin' ? `
+                  <button onclick="window.deleteCar('${car.firestoreId}')" 
+                    class="absolute bottom-3 right-3 p-2 bg-red-500/90 hover:bg-red-600 text-white rounded-lg transition-all shadow-lg">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                  </button>
+                ` : ''}
+              </div>
+              <div class="p-4">
+                <h3 class="font-bold text-white text-lg">${car.name}</h3>
+                <p class="text-slate-400 text-sm font-mono">${car.plate}</p>
+                <div class="flex gap-4 mt-3 text-xs text-slate-400">
+                  <span class="flex items-center gap-1"><i data-lucide="fuel" class="w-3 h-3"></i> ${car.fuel || 0}%</span>
+                  <span class="flex items-center gap-1"><i data-lucide="gauge" class="w-3 h-3"></i> ${parseInt(car.mileage || 0).toLocaleString()} km</span>
+                </div>
+                <button onclick="window.openBookingModal('${car.firestoreId}', '${car.name}', ${car.price})"
+                  class="w-full mt-4 py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-all flex items-center justify-center gap-2">
+                  <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+                  Rezervo
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        </div>`;
+
+      document.getElementById('contentArea').innerHTML = filterBar + adminAddButton + carGrid;
       lucide.createIcons();
     };
 
+    // Render Bookings
     window.renderBookings = () => {
       if (currentUserRole !== 'admin') return;
       currentPage = 'bookings';
@@ -506,52 +608,54 @@
 
       document.getElementById('contentArea').innerHTML = bookings.length === 0 ?
         `<div class="text-center py-20">
-                    <i data-lucide="calendar-x" class="w-16 h-16 text-slate-600 mx-auto mb-4"></i>
-                    <p class="text-slate-400">Nuk ka rezervime</p>
-                </div>` :
-        `<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
-                    <table class="w-full">
-                        <thead class="bg-slate-800 text-xs font-semibold text-slate-400 uppercase">
-                            <tr>
-                                <th class="px-6 py-4 text-left">ID</th>
-                                <th class="px-6 py-4 text-left">Klienti</th>
-                                <th class="px-6 py-4 text-left">Vetura</th>
-                                <th class="px-6 py-4 text-left">Data</th>
-                                <th class="px-6 py-4 text-left">Statusi</th>
-                                <th class="px-6 py-4 text-right">Veprime</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-800">
-                            ${bookings.map(b => `
-                                <tr class="hover:bg-slate-800/50">
-                                    <td class="px-6 py-4 text-sm text-white font-mono">${b.id}</td>
-                                    <td class="px-6 py-4 text-sm text-slate-300">${b.client}</td>
-                                    <td class="px-6 py-4 text-sm text-slate-400">${b.car}</td>
-                                    <td class="px-6 py-4 text-sm text-slate-400">${b.startDate} - ${b.endDate}</td>
-                                    <td class="px-6 py-4">${statusBadges[b.status]}</td>
-                                    <td class="px-6 py-4 text-right">
-                                        <div class="flex justify-end gap-2">
-                                            ${b.status === 'pending' ? `
-                                                <button onclick="window.approveBooking('${b.firestoreId}')" class="p-2 bg-emerald-500/10 text-emerald-400 rounded hover:bg-emerald-500/20">
-                                                    <i data-lucide="check" class="w-4 h-4"></i>
-                                                </button>
-                                                <button onclick="window.rejectBooking('${b.firestoreId}')" class="p-2 bg-rose-500/10 text-rose-400 rounded hover:bg-rose-500/20">
-                                                    <i data-lucide="x" class="w-4 h-4"></i>
-                                                </button>
-                                            ` : ''}
-                                            <button onclick="window.deleteBooking('${b.firestoreId}')" class="p-2 bg-slate-700 text-slate-400 rounded hover:bg-rose-500/20 hover:text-rose-400">
-                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>`;
+          <i data-lucide="calendar-x" class="w-16 h-16 text-slate-600 mx-auto mb-4"></i>
+          <p class="text-slate-400">Nuk ka rezervime</p>
+        </div>` :
+        `<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden overflow-x-auto">
+          <table class="w-full min-w-[800px]">
+            <thead class="bg-slate-800 text-xs font-semibold text-slate-400 uppercase">
+              <tr>
+                <th class="px-6 py-4 text-left">Klienti</th>
+                <th class="px-6 py-4 text-left">Vetura</th>
+                <th class="px-6 py-4 text-left">Data</th>
+                <th class="px-6 py-4 text-left">Statusi</th>
+                <th class="px-6 py-4 text-right">Veprime</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              ${bookings.map(b => `
+                <tr class="hover:bg-slate-800/50">
+                  <td class="px-6 py-4">
+                    <div class="text-white font-medium">${b.client}</div>
+                    <div class="text-slate-500 text-xs">${b.clientId || 'N/A'}</div>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-slate-400">${b.car}</td>
+                  <td class="px-6 py-4 text-sm text-slate-400">${b.startDate} - ${b.endDate}</td>
+                  <td class="px-6 py-4">${statusBadges[b.status] || statusBadges['pending']}</td>
+                  <td class="px-6 py-4 text-right">
+                    <div class="flex justify-end gap-2">
+                      ${b.status === 'pending' ? `
+                        <button onclick="window.approveBooking('${b.firestoreId}')" class="p-2 bg-emerald-500/10 text-emerald-400 rounded hover:bg-emerald-500/20">
+                          <i data-lucide="check" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="window.rejectBooking('${b.firestoreId}')" class="p-2 bg-rose-500/10 text-rose-400 rounded hover:bg-rose-500/20">
+                          <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                      ` : ''}
+                      <button onclick="window.deleteBooking('${b.firestoreId}')" class="p-2 bg-slate-700 text-slate-400 rounded hover:bg-rose-500/20 hover:text-rose-400">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>`;
       lucide.createIcons();
     };
 
+    // Render Clients
     window.renderClients = () => {
       if (currentUserRole !== 'admin') return;
       currentPage = 'clients';
@@ -573,38 +677,38 @@
 
       document.getElementById('contentArea').innerHTML = clients.length === 0 ?
         `<div class="text-center py-20">
-                    <i data-lucide="users" class="w-16 h-16 text-slate-600 mx-auto mb-4"></i>
-                    <p class="text-slate-400">Nuk ka klientë</p>
-                </div>` :
+          <i data-lucide="users" class="w-16 h-16 text-slate-600 mx-auto mb-4"></i>
+          <p class="text-slate-400">Nuk ka klientë</p>
+        </div>` :
         `<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
-                    <table class="w-full">
-                        <thead class="bg-slate-800 text-xs font-semibold text-slate-400 uppercase">
-                            <tr>
-                                <th class="px-6 py-4 text-left">Emri</th>
-                                <th class="px-6 py-4 text-left">Nr. ID</th>
-                                <th class="px-6 py-4 text-center">Rezervime</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-800">
-                            ${clients.map(c => `
-                                <tr class="hover:bg-slate-800/50">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400 font-bold">
-                                                ${c.name.charAt(0).toUpperCase()}
-                                            </div>
-                                            <span class="text-white font-medium">${c.name}</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-slate-400 font-mono">${c.id || 'N/A'}</td>
-                                    <td class="px-6 py-4 text-center">
-                                        <span class="inline-block px-3 py-1 bg-slate-800 text-white text-sm font-bold rounded-full">${c.count}</span>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>`;
+          <table class="w-full">
+            <thead class="bg-slate-800 text-xs font-semibold text-slate-400 uppercase">
+              <tr>
+                <th class="px-6 py-4 text-left">Emri</th>
+                <th class="px-6 py-4 text-left">Nr. ID</th>
+                <th class="px-6 py-4 text-center">Rezervime</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              ${clients.map(c => `
+                <tr class="hover:bg-slate-800/50">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400 font-bold">
+                        ${c.name.charAt(0).toUpperCase()}
+                      </div>
+                      <span class="text-white font-medium">${c.name}</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-slate-400 font-mono">${c.id || 'N/A'}</td>
+                  <td class="px-6 py-4 text-center">
+                    <span class="inline-block px-3 py-1 bg-slate-800 text-white text-sm font-bold rounded-full">${c.count}</span>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>`;
       lucide.createIcons();
     };
 
@@ -620,8 +724,10 @@
     };
 
     window.deleteBooking = async (id) => {
-      await deleteDoc(doc(db, 'bookings', id));
-      showToast('Rezervimi u fshi!');
+      if (confirm('Jeni i sigurt që dëshironi të fshini këtë rezervim?')) {
+        await deleteDoc(doc(db, 'bookings', id));
+        showToast('Rezervimi u fshi!');
+      }
     };
 
     window.deleteCar = async (id) => {
@@ -631,9 +737,9 @@
       }
     };
 
+    // Add Car Modal
     window.openAddCarModal = () => {
       document.getElementById('addCarModal').classList.remove('hidden');
-      // Clear previous inputs
       document.getElementById('carName').value = '';
       document.getElementById('carPlate').value = '';
       document.getElementById('carPrice').value = '';
@@ -657,36 +763,88 @@
       const fuel = parseFloat(document.getElementById('carFuelLevel').value);
       const image = document.getElementById('carImage').value.trim();
 
-      // Validation
-      if (!name || !plate || !price || !mileage || !fuel || !image) {
-        showToast('Ju lutem plotësoni të gjitha fushat!');
-        return;
-      }
-
-      if (price <= 0 || mileage < 0 || fuel < 0 || fuel > 100) {
-        showToast('Vlerat numerike janë të pavlefshme!');
+      if (!name || !plate || !price || !image) {
+        showToast('Ju lutem plotësoni fushat e nevojshme!');
         return;
       }
 
       try {
-        // Add to Firestore
         await addDoc(collection(db, 'cars'), {
-          name: name,
-          plate: plate,
-          price: price,
-          fuelType: fuelType,
-          mileage: mileage,
-          fuel: fuel,
-          image: image,
+          name, plate, price, fuelType,
+          mileage: mileage || 0,
+          fuel: fuel || 100,
+          image,
           status: 'E Lirë',
           createdAt: new Date().toISOString()
         });
-
         showToast('Vetura u shtua me sukses!');
         closeAddCarModal();
       } catch (error) {
         console.error('Error adding car:', error);
         showToast('Gabim gjatë shtimit të veturës!');
+      }
+    };
+
+    // Booking Modal
+    window.openBookingModal = (carId, carName, carPrice) => {
+      selectedCarForBooking = { id: carId, name: carName, price: carPrice };
+      document.getElementById('bookingModal').classList.remove('hidden');
+      document.getElementById('bookingCarName').textContent = carName;
+      document.getElementById('bookingClientName').value = '';
+      document.getElementById('bookingClientId').value = '';
+      // Pre-fill dates from filter if available
+      document.getElementById('bookingStartDate').value = filterStartDate || '';
+      document.getElementById('bookingEndDate').value = filterEndDate || '';
+      lucide.createIcons();
+    };
+
+    window.closeBookingModal = () => {
+      document.getElementById('bookingModal').classList.add('hidden');
+      selectedCarForBooking = null;
+    };
+
+    window.saveBooking = async () => {
+      if (!selectedCarForBooking) return;
+
+      const clientName = document.getElementById('bookingClientName').value.trim();
+      const clientId = document.getElementById('bookingClientId').value.trim();
+      const startDate = document.getElementById('bookingStartDate').value;
+      const endDate = document.getElementById('bookingEndDate').value;
+
+      if (!clientName || !startDate || !endDate) {
+        showToast('Ju lutem plotësoni të gjitha fushat!');
+        return;
+      }
+
+      if (new Date(startDate) > new Date(endDate)) {
+        showToast('Data e marrjes duhet të jetë para datës së kthimit!');
+        return;
+      }
+
+      // Check availability
+      if (!isCarAvailable(selectedCarForBooking.id, startDate, endDate)) {
+        showToast('Vetura nuk është e lirë për këto data!');
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, 'bookings'), {
+          carId: selectedCarForBooking.id,
+          car: selectedCarForBooking.name,
+          price: selectedCarForBooking.price,
+          client: clientName,
+          clientId: clientId || null,
+          startDate,
+          endDate,
+          status: currentUserRole === 'admin' ? 'approved' : 'pending',
+          createdAt: new Date().toISOString()
+        });
+
+        showToast(currentUserRole === 'admin' ? 'Rezervimi u krye me sukses!' : 'Kërkesa u dërgua me sukses!');
+        closeBookingModal();
+      } catch (error) {
+        console.error('Error creating booking:', error);
+        showToast('Gabim gjatë krijimit të rezervimit!');
       }
     };
 
