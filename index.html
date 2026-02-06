@@ -33,7 +33,6 @@
 
     .glass {
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
     }
   </style>
 </head>
@@ -43,7 +42,7 @@
   <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 glass">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-8 fade-in">
       <div class="mb-6 flex justify-center"><img src="https://i.imgur.com/SZIoCrF.jpeg" alt="DUA Rent"
-          class="h-24 w-auto object-contain rounded-lg shadow-xl"></div>
+          class="h-24 rounded-lg shadow-xl"></div>
       <h2 class="text-3xl font-bold text-white text-center mb-2">Mirësevini</h2>
       <p class="text-slate-400 text-center mb-8">Sistemi i menaxhimit të flotës</p>
       <div class="space-y-3">
@@ -57,12 +56,12 @@
         </div>
         <div id="adminInputs" class="hidden space-y-3">
           <input type="email" id="adminEmail" placeholder="Email"
-            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none">
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
           <input type="password" id="adminPassword" placeholder="Fjalëkalimi"
-            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 outline-none"
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"
             onkeypress="if(event.key==='Enter') window.loginAsAdmin()">
           <button onclick="window.loginAsAdmin()"
-            class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all shadow-lg">Hyni</button>
+            class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold">Hyni</button>
           <p id="loginError" class="text-red-400 text-sm text-center hidden"></p>
         </div>
         <button id="showAdminBtn"
@@ -75,6 +74,7 @@
           class="h-5"><span class="text-xs font-semibold text-slate-400">VEROS</span></div>
     </div>
   </div>
+
   <!-- Sidebar -->
   <aside id="sidebar" class="hidden w-64 bg-slate-900 border-r border-slate-800 flex-col">
     <div class="p-6 flex items-center gap-3 border-b border-slate-800"><img src="https://i.imgur.com/SZIoCrF.jpeg"
@@ -107,6 +107,7 @@
           <span class="font-semibold">VEROS</span></span></div>
     </div>
   </aside>
+
   <!-- Main Content -->
   <main id="mainContent" class="hidden flex-1 flex flex-col overflow-hidden">
     <header class="bg-slate-900/50 glass border-b border-slate-800 px-8 py-4 flex justify-between items-center">
@@ -119,6 +120,7 @@
     </header>
     <div id="contentArea" class="flex-1 overflow-y-auto p-8"></div>
   </main>
+
   <!-- Add Car Modal -->
   <div id="addCarModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
     <div
@@ -153,13 +155,16 @@
         </div>
         <div><label class="block text-sm text-slate-300 mb-2">URL Imazhi</label><input type="url" id="carImage"
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
-        <div class="flex gap-3 mt-6"><button onclick="window.saveNewCar()"
-            class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold">Ruaj</button><button
-            onclick="window.closeAddCarModal()"
-            class="px-6 py-3 border border-slate-700 text-slate-300 rounded-xl">Anulo</button></div>
+        <div class="flex gap-3 mt-6">
+          <button onclick="window.saveNewCar()"
+            class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold">Ruaj</button>
+          <button onclick="window.closeAddCarModal()"
+            class="px-6 py-3 border border-slate-700 text-slate-300 rounded-xl">Anulo</button>
+        </div>
       </div>
     </div>
   </div>
+
   <!-- Booking Modal -->
   <div id="bookingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-lg w-full p-8 fade-in mx-4">
@@ -180,13 +185,16 @@
           <div><label class="block text-sm text-slate-300 mb-2">Kthimi</label><input type="date" id="bookingEndDate"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
         </div>
-        <div class="flex gap-3 mt-6"><button onclick="window.saveBooking()"
-            class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold">Konfirmo</button><button
-            onclick="window.closeBookingModal()"
-            class="px-6 py-3 border border-slate-700 text-slate-300 rounded-xl">Anulo</button></div>
+        <div class="flex gap-3 mt-6">
+          <button onclick="window.saveBooking()"
+            class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold">Konfirmo</button>
+          <button onclick="window.closeBookingModal()"
+            class="px-6 py-3 border border-slate-700 text-slate-300 rounded-xl">Anulo</button>
+        </div>
       </div>
     </div>
   </div>
+
   <!-- Payment Warning Modal -->
   <div id="paymentWarningModal"
     class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/95 glass">
@@ -202,6 +210,7 @@
         Rregull</button>
     </div>
   </div>
+
   <!-- Check-in Modal -->
   <div id="checkinModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-8 fade-in mx-4">
@@ -214,13 +223,17 @@
         <div><label class="block text-sm text-slate-300 mb-2">KM të Reja (Totali)</label><input type="number"
             id="checkinNewKm"
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
-        <div class="flex gap-3 mt-6"><button onclick="window.saveCheckin()"
+        <div class="flex gap-3 mt-6">
+          <button onclick="window.saveCheckin()"
             class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold">Konfirmo
-            Kthimin</button><button onclick="window.closeCheckinModal()"
-            class="px-6 py-3 border border-slate-700 text-slate-300 rounded-xl">Anulo</button></div>
+            Kthimin</button>
+          <button onclick="window.closeCheckinModal()"
+            class="px-6 py-3 border border-slate-700 text-slate-300 rounded-xl">Anulo</button>
+        </div>
       </div>
     </div>
   </div>
+
   <!-- Maintenance Modal -->
   <div id="maintenanceModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
     <div
@@ -253,6 +266,7 @@
       </div>
     </div>
   </div>
+
   <!-- Toast -->
   <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
     <div
@@ -267,143 +281,569 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    const firebaseConfig = { apiKey: "AIzaSyA2vUcgceBYtp3aXl-ie9QK_BOdFWN9wyo", authDomain: "dua-rent.firebaseapp.com", projectId: "dua-rent", storageBucket: "dua-rent.firebasestorage.app", messagingSenderId: "912156362545", appId: "1:912156362545:web:eed97b903255281f599210" };
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2vUcgceBYtp3aXl-ie9QK_BOdFWN9wyo",
+      authDomain: "dua-rent.firebaseapp.com",
+      projectId: "dua-rent",
+      storageBucket: "dua-rent.firebasestorage.app",
+      messagingSenderId: "912156362545",
+      appId: "1:912156362545:web:eed97b903255281f599210"
+    };
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
 
-    let cars = [], bookings = [], maintenanceLogs = [], currentUserRole = null, currentPage = 'cars';
+    let cars = [], bookings = [], maintenanceLogs = [];
+    let currentUserRole = null, currentPage = 'cars';
     let selectedCarForBooking = null, selectedBookingForCheckin = null, selectedCarForMaintenance = null;
     let filterStartDate = '', filterEndDate = '', hasSearched = false;
 
-    onSnapshot(collection(db, 'cars'), s => { cars = s.docs.map(d => ({ ...d.data(), firestoreId: d.id })); if (currentPage === 'cars' && hasSearched) renderCars(); else if (currentPage === 'dashboard') renderDashboard(); });
-    onSnapshot(collection(db, 'bookings'), s => { bookings = s.docs.map(d => ({ ...d.data(), firestoreId: d.id })); if (currentPage === 'cars' && hasSearched) renderCars(); else if (currentPage === 'bookings') renderBookings(); else if (currentPage === 'clients') renderClients(); else if (currentPage === 'dashboard') renderDashboard(); });
-    onSnapshot(collection(db, 'maintenanceLogs'), s => { maintenanceLogs = s.docs.map(d => ({ ...d.data(), firestoreId: d.id })); });
+    // Firestore Listeners
+    onSnapshot(collection(db, 'cars'), s => {
+      cars = s.docs.map(d => ({ ...d.data(), firestoreId: d.id }));
+      if (currentPage === 'cars' && hasSearched) renderCars();
+      else if (currentPage === 'dashboard') renderDashboard();
+    });
 
-    onAuthStateChanged(auth, u => { if (u && !currentUserRole) { currentUserRole = 'admin'; closeLoginModal(); updateUIForRole(); renderCars(); } });
+    onSnapshot(collection(db, 'bookings'), s => {
+      bookings = s.docs.map(d => ({ ...d.data(), firestoreId: d.id }));
+      if (currentPage === 'cars' && hasSearched) renderCars();
+      else if (currentPage === 'bookings') renderBookings();
+      else if (currentPage === 'clients') renderClients();
+      else if (currentPage === 'dashboard') renderDashboard();
+    });
 
-    window.showToast = m => { const t = document.getElementById('toast'); document.getElementById('toastMessage').textContent = m; t.classList.remove('translate-y-20', 'opacity-0'); setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000); };
-    function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); document.getElementById('sidebar').classList.remove('hidden'); document.getElementById('sidebar').classList.add('flex'); document.getElementById('mainContent').classList.remove('hidden'); }
-    function updateUIForRole() { document.getElementById('userRoleBadge').textContent = currentUserRole === 'admin' ? 'Administrator' : 'Guest'; document.querySelectorAll('.admin-only').forEach(el => el.classList.toggle('hidden', currentUserRole !== 'admin')); }
-    function datesOverlap(s1, e1, s2, e2) { return new Date(s1) <= new Date(e2) && new Date(s2) <= new Date(e1); }
-    function isCarAvailable(carId, start, end) { if (!start || !end) return true; return !bookings.some(b => b.carId === carId && b.status === 'approved' && datesOverlap(start, end, b.startDate, b.endDate)); }
-    function needsService(car) { return ((car.mileage || 0) - (car.lastServiceKm || 0)) >= 10000; }
+    onSnapshot(collection(db, 'maintenanceLogs'), s => {
+      maintenanceLogs = s.docs.map(d => ({ ...d.data(), firestoreId: d.id }));
+    });
 
-    window.loginAsGuest = () => { currentUserRole = 'guest'; closeLoginModal(); updateUIForRole(); renderCars(); showToast('Mirësevini!'); };
-    window.loginAsAdmin = async () => {
-      const email = document.getElementById('adminEmail').value, password = document.getElementById('adminPassword').value, err = document.getElementById('loginError');
-      if (!email || !password) { err.textContent = 'Plotësoni fushat!'; err.classList.remove('hidden'); return; }
-      try { await signInWithEmailAndPassword(auth, email, password); currentUserRole = 'admin'; closeLoginModal(); updateUIForRole(); renderCars(); showToast('Mirësevini, Admin!'); } catch (e) { err.textContent = 'Gabim!'; err.classList.remove('hidden'); }
+    onAuthStateChanged(auth, u => {
+      if (u && !currentUserRole) {
+        currentUserRole = 'admin';
+        closeLoginModal();
+        updateUIForRole();
+        renderCars();
+      }
+    });
+
+    // Helper Functions
+    window.showToast = m => {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMessage').textContent = m;
+      t.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000);
     };
-    window.handleLogout = async () => { if (currentUserRole === 'admin') await signOut(auth); location.reload(); };
 
-    window.filterAvailableCars = () => { filterStartDate = document.getElementById('filterStartDate').value; filterEndDate = document.getElementById('filterEndDate').value; if (!filterStartDate || !filterEndDate) { showToast('Zgjidhni datat!'); return; } if (new Date(filterStartDate) > new Date(filterEndDate)) { showToast('Datat gabim!'); return; } hasSearched = true; renderCars(); };
-    window.clearFilter = () => { hasSearched = false; filterStartDate = ''; filterEndDate = ''; renderCars(); };
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.add('hidden');
+      document.getElementById('sidebar').classList.remove('hidden');
+      document.getElementById('sidebar').classList.add('flex');
+      document.getElementById('mainContent').classList.remove('hidden');
+    }
 
+    function updateUIForRole() {
+      document.getElementById('userRoleBadge').textContent = currentUserRole === 'admin' ? 'Administrator' : 'Guest';
+      document.querySelectorAll('.admin-only').forEach(el => el.classList.toggle('hidden', currentUserRole !== 'admin'));
+    }
+
+    function datesOverlap(s1, e1, s2, e2) {
+      return new Date(s1) <= new Date(e2) && new Date(s2) <= new Date(e1);
+    }
+
+    function isCarAvailable(carId, start, end) {
+      if (!start || !end) return true;
+      return !bookings.some(b => b.carId === carId && b.status === 'approved' && datesOverlap(start, end, b.startDate, b.endDate));
+    }
+
+    function needsService(car) {
+      return ((car.mileage || 0) - (car.lastServiceKm || 0)) >= 10000;
+    }
+
+    // Authentication
+    window.loginAsGuest = () => {
+      currentUserRole = 'guest';
+      closeLoginModal();
+      updateUIForRole();
+      renderCars();
+      showToast('Mirësevini!');
+    };
+
+    window.loginAsAdmin = async () => {
+      const email = document.getElementById('adminEmail').value;
+      const password = document.getElementById('adminPassword').value;
+      const err = document.getElementById('loginError');
+
+      if (!email || !password) {
+        err.textContent = 'Plotësoni fushat!';
+        err.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        currentUserRole = 'admin';
+        closeLoginModal();
+        updateUIForRole();
+        renderCars();
+        showToast('Mirësevini, Admin!');
+      } catch (e) {
+        err.textContent = 'Gabim!';
+        err.classList.remove('hidden');
+      }
+    };
+
+    window.handleLogout = async () => {
+      if (currentUserRole === 'admin') await signOut(auth);
+      location.reload();
+    };
+
+    // Filter Functions
+    window.filterAvailableCars = () => {
+      filterStartDate = document.getElementById('filterStartDate').value;
+      filterEndDate = document.getElementById('filterEndDate').value;
+
+      if (!filterStartDate || !filterEndDate) {
+        showToast('Zgjidhni datat!');
+        return;
+      }
+
+      if (new Date(filterStartDate) > new Date(filterEndDate)) {
+        showToast('Datat gabim!');
+        return;
+      }
+
+      hasSearched = true;
+      renderCars();
+    };
+
+    window.clearFilter = () => {
+      hasSearched = false;
+      filterStartDate = '';
+      filterEndDate = '';
+      renderCars();
+    };
+
+    // Render Functions
     window.renderDashboard = () => {
-      if (currentUserRole !== 'admin') return; currentPage = 'dashboard'; setActiveNav('nav-dashboard'); document.getElementById('pageTitle').textContent = 'Dashboard'; document.getElementById('pageSubtitle').textContent = 'Statistikat';
-      const total = cars.length, avail = cars.filter(c => c.status === 'E Lirë').length, rented = cars.filter(c => c.status === 'Me Qira').length;
-      const revenue = bookings.filter(b => b.status === 'approved' || b.status === 'completed').reduce((s, b) => s + ((b.price || 0) * (Math.ceil((new Date(b.endDate) - new Date(b.startDate)) / 86400000) + 1)), 0);
-      document.getElementById('contentArea').innerHTML = `<div class="grid grid-cols-1 md:grid-cols-4 gap-6"><div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Totali</p><h3 class="text-3xl font-bold text-white">${total}</h3></div><div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Të Lira</p><h3 class="text-3xl font-bold text-emerald-400">${avail}</h3></div><div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Me Qira</p><h3 class="text-3xl font-bold text-violet-400">${rented}</h3></div><div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Të Hyrat</p><h3 class="text-2xl font-bold text-emerald-400">€${revenue.toFixed(2)}</h3></div></div>`;
+      if (currentUserRole !== 'admin') return;
+      currentPage = 'dashboard';
+      setActiveNav('nav-dashboard');
+      document.getElementById('pageTitle').textContent = 'Dashboard';
+      document.getElementById('pageSubtitle').textContent = 'Statistikat';
+
+      const total = cars.length;
+      const avail = cars.filter(c => c.status === 'E Lirë').length;
+      const rented = cars.filter(c => c.status === 'Me Qira').length;
+      const revenue = bookings.filter(b => b.status === 'approved' || b.status === 'completed').reduce((s, b) =>
+        s + ((b.price || 0) * (Math.ceil((new Date(b.endDate) - new Date(b.startDate)) / 86400000) + 1)), 0);
+
+      document.getElementById('contentArea').innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Totali</p><h3 class="text-3xl font-bold text-white">${total}</h3></div>
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Të Lira</p><h3 class="text-3xl font-bold text-emerald-400">${avail}</h3></div>
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Me Qira</p><h3 class="text-3xl font-bold text-violet-400">${rented}</h3></div>
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Të Hyrat</p><h3 class="text-2xl font-bold text-emerald-400">€${revenue.toFixed(2)}</h3></div>
+        </div>`;
       lucide.createIcons();
     };
 
     window.renderCars = () => {
-      currentPage = 'cars'; setActiveNav('nav-cars'); document.getElementById('pageTitle').textContent = 'Veturat'; const today = new Date().toISOString().split('T')[0];
-      const adminBtn = currentUserRole === 'admin' ? `<div class="flex justify-end mb-6"><button onclick="window.openAddCarModal()" class="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold"><i data-lucide="plus" class="w-5 h-5"></i>Shto Veturë</button></div>` : '';
+      currentPage = 'cars';
+      setActiveNav('nav-cars');
+      document.getElementById('pageTitle').textContent = 'Veturat';
+      const today = new Date().toISOString().split('T')[0];
+
+      const adminBtn = currentUserRole === 'admin' ?
+        '<div class="flex justify-end mb-6"><button onclick="window.openAddCarModal()" class="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold"><i data-lucide="plus" class="w-5 h-5"></i>Shto Veturë</button></div>' : '';
+
       if (!hasSearched) {
         document.getElementById('pageSubtitle').textContent = 'Zgjidhni datat';
-        document.getElementById('contentArea').innerHTML = adminBtn + `<div class="flex items-center justify-center min-h-[60vh]"><div class="text-center max-w-2xl"><div class="bg-indigo-500/20 p-8 rounded-full w-32 h-32 mx-auto mb-8 flex items-center justify-center"><i data-lucide="calendar-search" class="w-16 h-16 text-indigo-400"></i></div><h2 class="text-3xl font-bold text-white mb-4">Zgjidhni datat për të parë veturat</h2><div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 max-w-xl mx-auto"><div class="grid grid-cols-2 gap-6 mb-6"><div><label class="block text-sm text-slate-300 mb-2 text-left">Marrja</label><input type="date" id="filterStartDate" min="${today}" class="w-full px-4 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div><div><label class="block text-sm text-slate-300 mb-2 text-left">Kthimi</label><input type="date" id="filterEndDate" min="${today}" class="w-full px-4 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div></div><button onclick="window.filterAvailableCars()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-lg flex items-center justify-center gap-3"><i data-lucide="search" class="w-5 h-5"></i>Gjej Veturat</button></div></div></div>`;
-        lucide.createIcons(); return;
+        document.getElementById('contentArea').innerHTML = adminBtn + `
+          <div class="flex items-center justify-center min-h-[60vh]">
+            <div class="text-center max-w-2xl">
+              <div class="bg-indigo-500/20 p-8 rounded-full w-32 h-32 mx-auto mb-8 flex items-center justify-center">
+                <i data-lucide="calendar-search" class="w-16 h-16 text-indigo-400"></i>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-4">Zgjidhni datat për të parë veturat</h2>
+              <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 max-w-xl mx-auto">
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                  <div><label class="block text-sm text-slate-300 mb-2 text-left">Marrja</label>
+                    <input type="date" id="filterStartDate" min="${today}" class="w-full px-4 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
+                  </div>
+                  <div><label class="block text-sm text-slate-300 mb-2 text-left">Kthimi</label>
+                    <input type="date" id="filterEndDate" min="${today}" class="w-full px-4 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
+                  </div>
+                </div>
+                <button onclick="window.filterAvailableCars()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-lg flex items-center justify-center gap-3">
+                  <i data-lucide="search" class="w-5 h-5"></i>Gjej Veturat
+                </button>
+              </div>
+            </div>
+          </div>`;
+        lucide.createIcons();
+        return;
       }
+
       const availCars = cars.filter(c => isCarAvailable(c.firestoreId, filterStartDate, filterEndDate));
       document.getElementById('pageSubtitle').textContent = `${availCars.length} vetura të lira`;
-      const filterBar = `<div class="bg-slate-900 border border-slate-800 rounded-xl p-4 mb-6"><div class="flex items-center gap-4"><span class="text-slate-400">${filterStartDate} → ${filterEndDate}</span><div class="flex-1"></div><button onclick="window.clearFilter()" class="px-4 py-2 border border-slate-700 text-slate-400 rounded-lg flex items-center gap-2"><i data-lucide="x" class="w-4 h-4"></i>Kërkim i Ri</button></div></div>`;
-      const grid = availCars.length === 0 ? `<div class="text-center py-20"><p class="text-slate-400">Nuk ka vetura</p></div>` :
-        `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">${availCars.map(c => {
-          const svcAlert = needsService(c) ? `<span class="absolute top-12 left-3 px-2 py-1 bg-red-600 text-white text-xs font-bold rounded-full animate-pulse">⚠️ SERVIS</span>` : '';
-          const adminBtns = currentUserRole === 'admin' ? `<button onclick="window.deleteCar('${c.firestoreId}')" class="absolute bottom-3 right-3 p-2 bg-red-500/90 text-white rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button><button onclick="window.openMaintenanceModal('${c.firestoreId}','${c.name}',${c.mileage || 0})" class="absolute bottom-3 right-12 p-2 bg-amber-500/90 text-white rounded-lg"><i data-lucide="wrench" class="w-4 h-4"></i></button>` : '';
-          return `<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden"><div class="h-48 bg-slate-800 relative"><img src="${c.image}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x200'"><span class="absolute top-3 left-3 px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">E Lirë</span>${svcAlert}<span class="absolute top-3 right-3 px-3 py-1 bg-slate-900/90 text-white text-xs font-bold rounded-full">€${c.price}/ditë</span>${adminBtns}</div><div class="p-4"><h3 class="font-bold text-white text-lg">${c.name}</h3><p class="text-slate-400 text-sm">${c.plate}</p><div class="flex gap-4 mt-3 text-xs text-slate-400"><span><i data-lucide="gauge" class="w-3 h-3 inline"></i> ${(c.mileage || 0).toLocaleString()} km</span></div><button onclick="window.openBookingModal('${c.firestoreId}','${c.name}',${c.price})" class="w-full mt-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium flex items-center justify-center gap-2"><i data-lucide="calendar-plus" class="w-4 h-4"></i>Rezervo</button></div></div>`;
-        }).join('')}</div>`;
-      document.getElementById('contentArea').innerHTML = adminBtn + filterBar + grid; lucide.createIcons();
+
+      const filterBar = `
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 mb-6">
+          <div class="flex items-center gap-4">
+            <span class="text-slate-400">${filterStartDate} → ${filterEndDate}</span>
+            <div class="flex-1"></div>
+            <button onclick="window.clearFilter()" class="px-4 py-2 border border-slate-700 text-slate-400 rounded-lg flex items-center gap-2">
+              <i data-lucide="x" class="w-4 h-4"></i>Kërkim i Ri
+            </button>
+          </div>
+        </div>`;
+
+      const grid = availCars.length === 0 ? '<div class="text-center py-20"><p class="text-slate-400">Nuk ka vetura</p></div>' :
+        '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">' + availCars.map(c => {
+          const svcAlert = needsService(c) ? '<span class="absolute top-12 left-3 px-2 py-1 bg-red-600 text-white text-xs font-bold rounded-full animate-pulse">⚠️ SERVIS</span>' : '';
+          const adminBtns = currentUserRole === 'admin' ?
+            `<button onclick="window.deleteCar('${c.firestoreId}')" class="absolute bottom-3 right-3 p-2 bg-red-500/90 text-white rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+             <button onclick="window.openMaintenanceModal('${c.firestoreId}','${c.name}',${c.mileage || 0})" class="absolute bottom-3 right-12 p-2 bg-amber-500/90 text-white rounded-lg"><i data-lucide="wrench" class="w-4 h-4"></i></button>` : '';
+
+          return `<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+            <div class="h-48 bg-slate-800 relative">
+              <img src="${c.image}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x200'">
+              <span class="absolute top-3 left-3 px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">E Lirë</span>
+              ${svcAlert}
+              <span class="absolute top-3 right-3 px-3 py-1 bg-slate-900/90 text-white text-xs font-bold rounded-full">€${c.price}/ditë</span>
+              ${adminBtns}
+            </div>
+            <div class="p-4">
+              <h3 class="font-bold text-white text-lg">${c.name}</h3>
+              <p class="text-slate-400 text-sm">${c.plate}</p>
+              <div class="flex gap-4 mt-3 text-xs text-slate-400">
+                <span><i data-lucide="gauge" class="w-3 h-3 inline"></i> ${(c.mileage || 0).toLocaleString()} km</span>
+              </div>
+              <button onclick="window.openBookingModal('${c.firestoreId}','${c.name}',${c.price})" class="w-full mt-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium flex items-center justify-center gap-2">
+                <i data-lucide="calendar-plus" class="w-4 h-4"></i>Rezervo
+              </button>
+            </div>
+          </div>`;
+        }).join('') + '</div>';
+
+      document.getElementById('contentArea').innerHTML = adminBtn + filterBar + grid;
+      lucide.createIcons();
     };
 
     window.renderBookings = () => {
-      if (currentUserRole !== 'admin') return; currentPage = 'bookings'; setActiveNav('nav-bookings'); document.getElementById('pageTitle').textContent = 'Rezervimet'; document.getElementById('pageSubtitle').textContent = `${bookings.length} rezervime`;
-      const badges = { pending: '<span class="px-2 py-1 bg-amber-500/10 text-amber-400 text-xs rounded">Në Pritje</span>', approved: '<span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded">Aktive</span>', completed: '<span class="px-2 py-1 bg-blue-500/10 text-blue-400 text-xs rounded">Përfunduar</span>', rejected: '<span class="px-2 py-1 bg-rose-500/10 text-rose-400 text-xs rounded">Refuzuar</span>' };
-      document.getElementById('contentArea').innerHTML = bookings.length === 0 ? `<div class="text-center py-20"><p class="text-slate-400">Nuk ka rezervime</p></div>` :
-        `<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto"><table class="w-full min-w-[900px]"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Klienti</th><th class="px-6 py-4 text-left">Vetura</th><th class="px-6 py-4 text-left">Data</th><th class="px-6 py-4 text-left">Statusi</th><th class="px-6 py-4 text-right">Veprime</th></tr></thead><tbody class="divide-y divide-slate-800">${bookings.map(b => {
+      if (currentUserRole !== 'admin') return;
+      currentPage = 'bookings';
+      setActiveNav('nav-bookings');
+      document.getElementById('pageTitle').textContent = 'Rezervimet';
+      document.getElementById('pageSubtitle').textContent = `${bookings.length} rezervime`;
+
+      const badges = {
+        pending: '<span class="px-2 py-1 bg-amber-500/10 text-amber-400 text-xs rounded">Në Pritje</span>',
+        approved: '<span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded">Aktive</span>',
+        completed: '<span class="px-2 py-1 bg-blue-500/10 text-blue-400 text-xs rounded">Përfunduar</span>',
+        rejected: '<span class="px-2 py-1 bg-rose-500/10 text-rose-400 text-xs rounded">Refuzuar</span>'
+      };
+
+      document.getElementById('contentArea').innerHTML = bookings.length === 0 ? '<div class="text-center py-20"><p class="text-slate-400">Nuk ka rezervime</p></div>' :
+        '<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto"><table class="w-full min-w-[900px]"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Klienti</th><th class="px-6 py-4 text-left">Vetura</th><th class="px-6 py-4 text-left">Data</th><th class="px-6 py-4 text-left">Statusi</th><th class="px-6 py-4 text-right">Veprime</th></tr></thead><tbody class="divide-y divide-slate-800">' +
+        bookings.map(b => {
           const actions = [];
-          if (b.status === 'pending') actions.push(`<button onclick="window.approveBooking('${b.firestoreId}')" class="p-2 bg-emerald-500/10 text-emerald-400 rounded"><i data-lucide="check" class="w-4 h-4"></i></button><button onclick="window.rejectBooking('${b.firestoreId}')" class="p-2 bg-rose-500/10 text-rose-400 rounded"><i data-lucide="x" class="w-4 h-4"></i></button>`);
-          if (b.status === 'approved') actions.push(`<button onclick="window.openCheckinModal('${b.firestoreId}','${b.car}','${b.carId}')" class="p-2 bg-blue-500/10 text-blue-400 rounded" title="Kthe Veturën"><i data-lucide="log-in" class="w-4 h-4"></i></button>`);
+          if (b.status === 'pending') {
+            actions.push(`<button onclick="window.approveBooking('${b.firestoreId}')" class="p-2 bg-emerald-500/10 text-emerald-400 rounded"><i data-lucide="check" class="w-4 h-4"></i></button>`);
+            actions.push(`<button onclick="window.rejectBooking('${b.firestoreId}')" class="p-2 bg-rose-500/10 text-rose-400 rounded"><i data-lucide="x" class="w-4 h-4"></i></button>`);
+          }
+          if (b.status === 'approved') {
+            actions.push(`<button onclick="window.openCheckinModal('${b.firestoreId}','${b.car}','${b.carId}')" class="p-2 bg-blue-500/10 text-blue-400 rounded" title="Kthe Veturën"><i data-lucide="log-in" class="w-4 h-4"></i></button>`);
+          }
           actions.push(`<button onclick="window.deleteBooking('${b.firestoreId}')" class="p-2 bg-slate-700 text-slate-400 rounded"><i data-lucide="trash-2" class="w-4 h-4"></i></button>`);
+
           return `<tr><td class="px-6 py-4"><div class="text-white">${b.client}</div><div class="text-slate-500 text-xs">${b.clientId || 'N/A'}</div></td><td class="px-6 py-4 text-slate-400">${b.car}</td><td class="px-6 py-4 text-slate-400">${b.startDate} - ${b.endDate}</td><td class="px-6 py-4">${badges[b.status] || badges.pending}</td><td class="px-6 py-4 text-right"><div class="flex justify-end gap-2">${actions.join('')}</div></td></tr>`;
-        }).join('')}</tbody></table></div>`;
+        }).join('') + '</tbody></table></div>';
+
       lucide.createIcons();
     };
 
     window.renderClients = () => {
-      if (currentUserRole !== 'admin') return; currentPage = 'clients'; setActiveNav('nav-clients'); document.getElementById('pageTitle').textContent = 'Klientët'; document.getElementById('pageSubtitle').textContent = 'Lista';
-      const cMap = new Map(); bookings.forEach(b => { const k = b.clientId || b.client; if (cMap.has(k)) cMap.get(k).count++; else cMap.set(k, { name: b.client, id: b.clientId, count: 1 }); });
+      if (currentUserRole !== 'admin') return;
+      currentPage = 'clients';
+      setActiveNav('nav-clients');
+      document.getElementById('pageTitle').textContent = 'Klientët';
+      document.getElementById('pageSubtitle').textContent = 'Lista';
+
+      const cMap = new Map();
+      bookings.forEach(b => {
+        const k = b.clientId || b.client;
+        if (cMap.has(k)) cMap.get(k).count++;
+        else cMap.set(k, { name: b.client, id: b.clientId, count: 1 });
+      });
+
       const clients = Array.from(cMap.values());
-      document.getElementById('contentArea').innerHTML = clients.length === 0 ? `<div class="text-center py-20"><p class="text-slate-400">Nuk ka klientë</p></div>` :
-        `<div class="bg-slate-900 border border-slate-800 rounded-xl"><table class="w-full"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Emri</th><th class="px-6 py-4 text-left">ID</th><th class="px-6 py-4 text-center">Rezervime</th></tr></thead><tbody class="divide-y divide-slate-800">${clients.map(c => `<tr><td class="px-6 py-4 text-white">${c.name}</td><td class="px-6 py-4 text-slate-400">${c.id || 'N/A'}</td><td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-slate-800 text-white rounded-full">${c.count}</span></td></tr>`).join('')}</tbody></table></div>`;
+
+      document.getElementById('contentArea').innerHTML = clients.length === 0 ? '<div class="text-center py-20"><p class="text-slate-400">Nuk ka klientë</p></div>' :
+        '<div class="bg-slate-900 border border-slate-800 rounded-xl"><table class="w-full"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Emri</th><th class="px-6 py-4 text-left">ID</th><th class="px-6 py-4 text-center">Rezervime</th></tr></thead><tbody class="divide-y divide-slate-800">' +
+        clients.map(c => `<tr><td class="px-6 py-4 text-white">${c.name}</td><td class="px-6 py-4 text-slate-400">${c.id || 'N/A'}</td><td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-slate-800 text-white rounded-full">${c.count}</span></td></tr>`).join('') +
+        '</tbody></table></div>';
+
       lucide.createIcons();
     };
 
-    window.approveBooking = async id => { await updateDoc(doc(db, 'bookings', id), { status: 'approved' }); showToast('Aprovuar!'); };
-    window.rejectBooking = async id => { await updateDoc(doc(db, 'bookings', id), { status: 'rejected' }); showToast('Refuzuar!'); };
-    window.deleteBooking = async id => { if (confirm('Fshi?')) { await deleteDoc(doc(db, 'bookings', id)); showToast('U fshi!'); } };
-    window.deleteCar = async id => { if (confirm('Fshi veturën?')) { await deleteDoc(doc(db, 'cars', id)); showToast('U fshi!'); } };
+    // CRUD Operations
+    window.approveBooking = async id => {
+      await updateDoc(doc(db, 'bookings', id), { status: 'approved' });
+      showToast('Aprovuar!');
+    };
 
-    window.openAddCarModal = () => { document.getElementById('addCarModal').classList.remove('hidden');['carName', 'carPlate', 'carPrice', 'carMileage', 'carFuelLevel', 'carImage'].forEach(id => document.getElementById(id).value = ''); lucide.createIcons(); };
+    window.rejectBooking = async id => {
+      await updateDoc(doc(db, 'bookings', id), { status: 'rejected' });
+      showToast('Refuzuar!');
+    };
+
+    window.deleteBooking = async id => {
+      if (confirm('Fshi?')) {
+        await deleteDoc(doc(db, 'bookings', id));
+        showToast('U fshi!');
+      }
+    };
+
+    window.deleteCar = async id => {
+      if (confirm('Fshi veturën?')) {
+        await deleteDoc(doc(db, 'cars', id));
+        showToast('U fshi!');
+      }
+    };
+
+    // Add Car Modal
+    window.openAddCarModal = () => {
+      document.getElementById('addCarModal').classList.remove('hidden');
+      ['carName', 'carPlate', 'carPrice', 'carMileage', 'carFuelLevel', 'carImage'].forEach(id => document.getElementById(id).value = '');
+      lucide.createIcons();
+    };
+
     window.closeAddCarModal = () => document.getElementById('addCarModal').classList.add('hidden');
+
     window.saveNewCar = async () => {
-      const name = document.getElementById('carName').value.trim(), plate = document.getElementById('carPlate').value.trim(), price = parseFloat(document.getElementById('carPrice').value), mileage = parseFloat(document.getElementById('carMileage').value) || 0, fuel = parseFloat(document.getElementById('carFuelLevel').value) || 100, image = document.getElementById('carImage').value.trim(), fuelType = document.getElementById('carFuelType').value;
-      if (!name || !plate || !price || !image) { showToast('Plotësoni fushat!'); return; }
-      try { await addDoc(collection(db, 'cars'), { name, plate, price, fuelType, mileage, fuel, image, status: 'E Lirë', lastServiceKm: mileage, createdAt: new Date().toISOString() }); showToast('U shtua!'); closeAddCarModal(); } catch (e) { showToast('Gabim!'); }
+      const name = document.getElementById('carName').value.trim();
+      const plate = document.getElementById('carPlate').value.trim();
+      const price = parseFloat(document.getElementById('carPrice').value);
+      const mileage = parseFloat(document.getElementById('carMileage').value) || 0;
+      const fuel = parseFloat(document.getElementById('carFuelLevel').value) || 100;
+      const image = document.getElementById('carImage').value.trim();
+      const fuelType = document.getElementById('carFuelType').value;
+
+      if (!name || !plate || !price || !image) {
+        showToast('Plotësoni fushat!');
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, 'cars'), {
+          name, plate, price, fuelType, mileage, fuel, image,
+          status: 'E Lirë',
+          lastServiceKm: mileage,
+          createdAt: new Date().toISOString()
+        });
+        showToast('U shtua!');
+        closeAddCarModal();
+      } catch (e) {
+        showToast('Gabim!');
+      }
     };
 
-    window.openBookingModal = (id, name, price) => { selectedCarForBooking = { id, name, price }; document.getElementById('bookingModal').classList.remove('hidden'); document.getElementById('bookingCarName').textContent = name;['bookingClientName', 'bookingClientId'].forEach(i => document.getElementById(i).value = ''); document.getElementById('bookingStartDate').value = filterStartDate; document.getElementById('bookingEndDate').value = filterEndDate; lucide.createIcons(); };
-    window.closeBookingModal = () => { document.getElementById('bookingModal').classList.add('hidden'); selectedCarForBooking = null; };
-    window.closePaymentWarningModal = () => document.getElementById('paymentWarningModal').classList.add('hidden');
-    window.saveBooking = async () => {
-      if (!selectedCarForBooking) return; const client = document.getElementById('bookingClientName').value.trim(), clientId = document.getElementById('bookingClientId').value.trim(), start = document.getElementById('bookingStartDate').value, end = document.getElementById('bookingEndDate').value;
-      if (!client || !start || !end) { showToast('Plotësoni fushat!'); return; } if (new Date(start) > new Date(end)) { showToast('Datat gabim!'); return; } if (!isCarAvailable(selectedCarForBooking.id, start, end)) { showToast('Jo e lirë!'); return; }
-      try { await addDoc(collection(db, 'bookings'), { carId: selectedCarForBooking.id, car: selectedCarForBooking.name, price: selectedCarForBooking.price, client, clientId: clientId || null, startDate: start, endDate: end, status: currentUserRole === 'admin' ? 'approved' : 'pending', createdAt: new Date().toISOString() }); closeBookingModal(); if (currentUserRole !== 'admin') { document.getElementById('paymentWarningModal').classList.remove('hidden'); lucide.createIcons(); } else showToast('U rezervua!'); } catch (e) { showToast('Gabim!'); }
-    };
-
-    window.openCheckinModal = (bookingId, carName, carId) => { selectedBookingForCheckin = { bookingId, carName, carId }; document.getElementById('checkinModal').classList.remove('hidden'); document.getElementById('checkinCarName').textContent = carName; document.getElementById('checkinNewKm').value = ''; lucide.createIcons(); };
-    window.closeCheckinModal = () => { document.getElementById('checkinModal').classList.add('hidden'); selectedBookingForCheckin = null; };
-    window.saveCheckin = async () => {
-      if (!selectedBookingForCheckin) return; const newKm = parseFloat(document.getElementById('checkinNewKm').value);
-      if (!newKm || newKm <= 0) { showToast('Vendos KM!'); return; }
-      try { await updateDoc(doc(db, 'cars', selectedBookingForCheckin.carId), { mileage: newKm, status: 'E Lirë' }); await updateDoc(doc(db, 'bookings', selectedBookingForCheckin.bookingId), { status: 'completed' }); showToast('Vetura u kthye!'); closeCheckinModal(); } catch (e) { showToast('Gabim!'); }
-    };
-
-    window.openMaintenanceModal = async (carId, carName, currentKm) => {
-      selectedCarForMaintenance = { carId, carName, currentKm }; document.getElementById('maintenanceModal').classList.remove('hidden'); document.getElementById('maintenanceCarName').textContent = `${carName} (${currentKm.toLocaleString()} km)`;
-      ['logDescription', 'logCost'].forEach(i => document.getElementById(i).value = ''); document.getElementById('logDate').value = new Date().toISOString().split('T')[0]; document.getElementById('logType').value = 'Servis';
-      const logs = maintenanceLogs.filter(l => l.carId === carId).sort((a, b) => new Date(b.date) - new Date(a.date));
-      document.getElementById('maintenanceLogs').innerHTML = logs.length === 0 ? '<p class="text-slate-500 text-sm">Nuk ka histori</p>' :
-        `<div class="space-y-2">${logs.map(l => `<div class="bg-slate-800 p-3 rounded-lg flex justify-between items-center"><div><span class="text-xs px-2 py-1 rounded ${l.type === 'Servis' ? 'bg-emerald-500/20 text-emerald-400' : l.type === 'Defekt' ? 'bg-red-500/20 text-red-400' : 'bg-blue-500/20 text-blue-400'}">${l.type}</span><span class="text-white ml-2">${l.description}</span></div><div class="text-right"><div class="text-amber-400 font-bold">€${l.cost}</div><div class="text-slate-500 text-xs">${l.date}</div></div></div>`).join('')}</div>`;
+    // Booking Modal
+    window.openBookingModal = (id, name, price) => {
+      selectedCarForBooking = { id, name, price };
+      document.getElementById('bookingModal').classList.remove('hidden');
+      document.getElementById('bookingCarName').textContent = name;
+      ['bookingClientName', 'bookingClientId'].forEach(i => document.getElementById(i).value = '');
+      document.getElementById('bookingStartDate').value = filterStartDate;
+      document.getElementById('bookingEndDate').value = filterEndDate;
       lucide.createIcons();
     };
-    window.closeMaintenanceModal = () => { document.getElementById('maintenanceModal').classList.add('hidden'); selectedCarForMaintenance = null; };
-    window.saveMaintenanceLog = async () => {
-      if (!selectedCarForMaintenance) return; const type = document.getElementById('logType').value, desc = document.getElementById('logDescription').value.trim(), cost = parseFloat(document.getElementById('logCost').value) || 0, date = document.getElementById('logDate').value;
-      if (!desc) { showToast('Shto përshkrim!'); return; }
-      try {
-        await addDoc(collection(db, 'maintenanceLogs'), { carId: selectedCarForMaintenance.carId, type, description: desc, cost, date, createdAt: new Date().toISOString() });
-        if (type === 'Servis') await updateDoc(doc(db, 'cars', selectedCarForMaintenance.carId), { lastServiceKm: selectedCarForMaintenance.currentKm });
-        showToast('U ruajt!'); window.openMaintenanceModal(selectedCarForMaintenance.carId, selectedCarForMaintenance.carName, selectedCarForMaintenance.currentKm);
-      } catch (e) { showToast('Gabim!'); }
+
+    window.closeBookingModal = () => {
+      document.getElementById('bookingModal').classList.add('hidden');
+      selectedCarForBooking = null;
     };
 
-    function setActiveNav(id) { document.querySelectorAll('nav button').forEach(b => { b.classList.remove('bg-indigo-600/10', 'text-indigo-400'); b.classList.add('text-slate-400'); }); const a = document.getElementById(id); if (a) { a.classList.add('bg-indigo-600/10', 'text-indigo-400'); a.classList.remove('text-slate-400'); } }
+    window.closePaymentWarningModal = () => document.getElementById('paymentWarningModal').classList.add('hidden');
+
+    window.saveBooking = async () => {
+      if (!selectedCarForBooking) return;
+
+      const client = document.getElementById('bookingClientName').value.trim();
+      const clientId = document.getElementById('bookingClientId').value.trim();
+      const start = document.getElementById('bookingStartDate').value;
+      const end = document.getElementById('bookingEndDate').value;
+
+      if (!client || !start || !end) {
+        showToast('Plotësoni fushat!');
+        return;
+      }
+
+      if (new Date(start) > new Date(end)) {
+        showToast('Datat gabim!');
+        return;
+      }
+
+      if (!isCarAvailable(selectedCarForBooking.id, start, end)) {
+        showToast('Jo e lirë!');
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, 'bookings'), {
+          carId: selectedCarForBooking.id,
+          car: selectedCarForBooking.name,
+          price: selectedCarForBooking.price,
+          client,
+          clientId: clientId || null,
+          startDate: start,
+          endDate: end,
+          status: currentUserRole === 'admin' ? 'approved' : 'pending',
+          createdAt: new Date().toISOString()
+        });
+
+        closeBookingModal();
+
+        if (currentUserRole !== 'admin') {
+          document.getElementById('paymentWarningModal').classList.remove('hidden');
+          lucide.createIcons();
+        } else {
+          showToast('U rezervua!');
+        }
+      } catch (e) {
+        showToast('Gabim!');
+      }
+    };
+
+    // Check-in Modal
+    window.openCheckinModal = (bookingId, carName, carId) => {
+      selectedBookingForCheckin = { bookingId, carName, carId };
+      document.getElementById('checkinModal').classList.remove('hidden');
+      document.getElementById('checkinCarName').textContent = carName;
+      document.getElementById('checkinNewKm').value = '';
+      lucide.createIcons();
+    };
+
+    window.closeCheckinModal = () => {
+      document.getElementById('checkinModal').classList.add('hidden');
+      selectedBookingForCheckin = null;
+    };
+
+    window.saveCheckin = async () => {
+      if (!selectedBookingForCheckin) return;
+
+      const newKm = parseFloat(document.getElementById('checkinNewKm').value);
+
+      if (!newKm || newKm <= 0) {
+        showToast('Vendos KM!');
+        return;
+      }
+
+      try {
+        await updateDoc(doc(db, 'cars', selectedBookingForCheckin.carId), {
+          mileage: newKm,
+          status: 'E Lirë'
+        });
+
+        await updateDoc(doc(db, 'bookings', selectedBookingForCheckin.bookingId), {
+          status: 'completed'
+        });
+
+        showToast('Vetura u kthye!');
+        closeCheckinModal();
+      } catch (e) {
+        showToast('Gabim!');
+      }
+    };
+
+    // Maintenance Modal
+    window.openMaintenanceModal = async (carId, carName, currentKm) => {
+      selectedCarForMaintenance = { carId, carName, currentKm };
+      document.getElementById('maintenanceModal').classList.remove('hidden');
+      document.getElementById('maintenanceCarName').textContent = `${carName} (${currentKm.toLocaleString()} km)`;
+
+      ['logDescription', 'logCost'].forEach(i => document.getElementById(i).value = '');
+      document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('logType').value = 'Servis';
+
+      const logs = maintenanceLogs.filter(l => l.carId === carId).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      document.getElementById('maintenanceLogs').innerHTML = logs.length === 0 ? '<p class="text-slate-500 text-sm">Nuk ka histori</p>' :
+        '<div class="space-y-2">' + logs.map(l => {
+          const typeClass = l.type === 'Servis' ? 'bg-emerald-500/20 text-emerald-400' : l.type === 'Defekt' ? 'bg-red-500/20 text-red-400' : 'bg-blue-500/20 text-blue-400';
+          return `<div class="bg-slate-800 p-3 rounded-lg flex justify-between items-center">
+            <div>
+              <span class="text-xs px-2 py-1 rounded ${typeClass}">${l.type}</span>
+              <span class="text-white ml-2">${l.description}</span>
+            </div>
+            <div class="text-right">
+              <div class="text-amber-400 font-bold">€${l.cost}</div>
+              <div class="text-slate-500 text-xs">${l.date}</div>
+            </div>
+          </div>`;
+        }).join('') + '</div>';
+
+      lucide.createIcons();
+    };
+
+    window.closeMaintenanceModal = () => {
+      document.getElementById('maintenanceModal').classList.add('hidden');
+      selectedCarForMaintenance = null;
+    };
+
+    window.saveMaintenanceLog = async () => {
+      if (!selectedCarForMaintenance) return;
+
+      const type = document.getElementById('logType').value;
+      const desc = document.getElementById('logDescription').value.trim();
+      const cost = parseFloat(document.getElementById('logCost').value) || 0;
+      const date = document.getElementById('logDate').value;
+
+      if (!desc) {
+        showToast('Shto përshkrim!');
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, 'maintenanceLogs'), {
+          carId: selectedCarForMaintenance.carId,
+          type,
+          description: desc,
+          cost,
+          date,
+          createdAt: new Date().toISOString()
+        });
+
+        if (type === 'Servis') {
+          await updateDoc(doc(db, 'cars', selectedCarForMaintenance.carId), {
+            lastServiceKm: selectedCarForMaintenance.currentKm
+          });
+        }
+
+        showToast('U ruajt!');
+        window.openMaintenanceModal(selectedCarForMaintenance.carId, selectedCarForMaintenance.carName, selectedCarForMaintenance.currentKm);
+      } catch (e) {
+        showToast('Gabim!');
+      }
+    };
+
+    function setActiveNav(id) {
+      document.querySelectorAll('nav button').forEach(b => {
+        b.classList.remove('bg-indigo-600/10', 'text-indigo-400');
+        b.classList.add('text-slate-400');
+      });
+      const a = document.getElementById(id);
+      if (a) {
+        a.classList.add('bg-indigo-600/10', 'text-indigo-400');
+        a.classList.remove('text-slate-400');
+      }
+    }
+
     document.getElementById('currentDate').textContent = new Date().toLocaleDateString('sq-AL', { weekday: 'short', month: 'short', day: 'numeric' });
     lucide.createIcons();
   </script>
