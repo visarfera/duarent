@@ -72,7 +72,8 @@
       <div
         class="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-slate-800 flex items-center justify-center gap-2 opacity-50">
         <span class="text-xs text-slate-500">Powered by</span><img src="https://i.imgur.com/oksiI1G.png" alt="VEROS"
-          class="h-4 md:h-5"><span class="text-xs font-semibold text-slate-400">VEROS</span></div>
+          class="h-4 md:h-5"><span class="text-xs font-semibold text-slate-400">VEROS</span>
+      </div>
     </div>
   </div>
 
@@ -103,6 +104,9 @@
       <button onclick="window.renderClients()" id="nav-clients"
         class="admin-only hidden w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition-all"><i
           data-lucide="users" class="w-5 h-5"></i><span class="font-medium">Klientët</span></button>
+      <button onclick="window.renderServisi()" id="nav-servisi"
+        class="admin-only hidden w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition-all"><i
+          data-lucide="wrench" class="w-5 h-5"></i><span class="font-medium">Servisi</span></button>
     </nav>
     <div class="p-4 border-t border-slate-800 space-y-3">
       <button onclick="window.handleLogout()"
@@ -161,8 +165,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><label class="block text-sm text-slate-300 mb-2">KM</label><input type="number" id="carMileage"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
-          <div><label class="block text-sm text-slate-300 mb-2">Karburanti (%)</label><input type="number"
-              id="carFuelLevel"
+          <div><label class="block text-sm text-slate-300 mb-2">KM e Servisit të Fundit</label><input type="number"
+              id="carLastServiceKm" placeholder="Nëse bosh, do të jetë = KM Aktuale"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
         </div>
         <div><label class="block text-sm text-slate-300 mb-2">URL Imazhi</label><input type="url" id="carImage"
@@ -215,7 +219,8 @@
       class="bg-slate-900 border border-amber-500/30 rounded-2xl shadow-2xl w-full md:max-w-md p-6 md:p-8 fade-in text-center">
       <div
         class="bg-amber-500/20 p-6 rounded-full w-20 h-20 md:w-24 md:h-24 mx-auto mb-6 flex items-center justify-center">
-        <i data-lucide="alert-triangle" class="w-10 h-10 md:w-12 md:h-12 text-amber-400"></i></div>
+        <i data-lucide="alert-triangle" class="w-10 h-10 md:w-12 md:h-12 text-amber-400"></i>
+      </div>
       <h2 class="text-xl md:text-2xl font-bold text-white mb-4">Rezervimi në Pritje!</h2>
       <p class="text-slate-300 mb-6 text-sm md:text-base">Rezervimi u dërgua. <span class="text-amber-400 font-bold">JU
           LUTEM KRYENI PAGESËN</span>. Pa pagesë, rezervimi nuk garantohet.</p>
@@ -279,6 +284,42 @@
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
         <button onclick="window.saveMaintenanceLog()"
           class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold">Ruaj Log</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Log Modal -->
+  <div id="editLogModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full md:max-w-lg fade-in p-6 md:p-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl md:text-2xl font-bold text-white">Ndrysho Log</h2>
+        <button onclick="window.closeEditLogModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-6 h-6"></i></button>
+      </div>
+      <div class="space-y-4">
+        <input type="hidden" id="editLogId">
+        <div><label class="block text-sm text-slate-300 mb-2">Lloji</label>
+          <select id="editLogType"
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
+            <option value="Servis">Servis</option>
+            <option value="Defekt">Defekt</option>
+            <option value="Investim">Investim</option>
+          </select>
+        </div>
+        <div><label class="block text-sm text-slate-300 mb-2">Kosto (€)</label>
+          <input type="number" id="editLogCost"
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
+        </div>
+        <div><label class="block text-sm text-slate-300 mb-2">Përshkrimi</label>
+          <input type="text" id="editLogDescription"
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
+        </div>
+        <div><label class="block text-sm text-slate-300 mb-2">Data</label>
+          <input type="date" id="editLogDate"
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
+        </div>
+        <button onclick="window.saveEditedLog()"
+          class="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-xl font-bold">Ruaj Ndryshimet</button>
       </div>
     </div>
   </div>
@@ -486,14 +527,71 @@
       currentPage = 'cars';
       setActiveNav('nav-cars');
       document.getElementById('pageTitle').textContent = 'Veturat';
+      closeMobileSidebar();
       const today = new Date().toISOString().split('T')[0];
 
       const adminBtn = currentUserRole === 'admin' ?
         '<div class="flex justify-end mb-6"><button onclick="window.openAddCarModal()" class="flex items-center gap-2 px-4 md:px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-sm md:text-base"><i data-lucide="plus" class="w-5 h-5"></i>Shto Veturë</button></div>' : '';
 
+      // ADMIN VIEW: Show all cars immediately
+      if (currentUserRole === 'admin') {
+        document.getElementById('pageSubtitle').textContent = `${cars.length} vetura totale`;
+
+        const grid = cars.length === 0 ? '<div class="text-center py-20"><p class="text-slate-400">Nuk ka vetura</p></div>' :
+          '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">' + cars.map(c => {
+            const activeBooking = bookings.find(b => b.carId === c.firestoreId && b.status === 'approved');
+            const isRented = c.status === 'Me Qira' && activeBooking;
+            const svcAlert = needsService(c) ? '<span class="absolute top-12 left-3 px-2 py-1 bg-red-600 text-white text-xs font-bold rounded-full animate-pulse">⚠️ SERVIS</span>' : '';
+
+            const rentalOverlay = isRented ? `
+              <div class="absolute inset-0 rental-overlay flex flex-col items-center justify-center text-white p-4">
+                <i data-lucide="user-check" class="w-8 h-8 mb-2"></i>
+                <p class="font-bold text-sm">Aktive: ${activeBooking.client}</p>
+                <p class="text-xs opacity-90">deri më ${activeBooking.endDate}</p>
+              </div>` : '';
+
+            const statusBadge = isRented ?
+              '<span class="absolute top-3 left-3 px-3 py-1 bg-violet-500 text-white text-xs font-bold rounded-full">Me Qira</span>' :
+              '<span class="absolute top-3 left-3 px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">E Lirë</span>';
+
+            return `<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+              <div class="h-40 md:h-48 bg-slate-800 relative">
+                <img src="${c.image}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x200'">
+                ${statusBadge}
+                ${svcAlert}
+                <span class="absolute top-3 right-3 px-3 py-1 bg-slate-900/90 text-white text-xs font-bold rounded-full">€${c.price}/ditë</span>
+                ${rentalOverlay}
+                <button onclick="window.deleteCar('${c.firestoreId}')" class="absolute bottom-3 right-3 p-2 bg-red-500/90 text-white rounded-lg z-10"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+              </div>
+              <div class="p-4">
+                <h3 class="font-bold text-white text-base md:text-lg">${c.name}</h3>
+                <p class="text-slate-400 text-sm">${c.plate}</p>
+                <div class="mt-3 p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+                  <div class="flex items-center justify-between text-xs mb-1">
+                    <span class="text-slate-400">🏁 KM Reale:</span>
+                    <span class="text-white font-bold">${(c.mileage || 0).toLocaleString()} km</span>
+                  </div>
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="text-slate-400">📅 Servisi Tjetër:</span>
+                    <span class="${needsService(c) ? 'text-red-500 font-extrabold animate-pulse' : 'text-emerald-400 font-bold'}">${((c.lastServiceKm || 0) + 10000).toLocaleString()} km ${needsService(c) ? '⚠️ DUHET SERVIS' : ''}</span>
+                  </div>
+                </div>
+                <button onclick="window.openBookingModal('${c.firestoreId}','${c.name}',${c.price})" class="w-full mt-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium flex items-center justify-center gap-2 text-sm md:text-base">
+                  <i data-lucide="calendar-plus" class="w-4 h-4"></i>Rezervo për Klient
+                </button>
+              </div>
+            </div>`;
+          }).join('') + '</div>';
+
+        document.getElementById('contentArea').innerHTML = adminBtn + grid;
+        lucide.createIcons();
+        return;
+      }
+
+      // GUEST VIEW: Date filter required
       if (!hasSearched) {
         document.getElementById('pageSubtitle').textContent = 'Zgjidhni datat';
-        document.getElementById('contentArea').innerHTML = adminBtn + `
+        document.getElementById('contentArea').innerHTML = `
           <div class="flex items-center justify-center min-h-[60vh]">
             <div class="text-center max-w-2xl px-4">
               <div class="bg-indigo-500/20 p-6 md:p-8 rounded-full w-24 h-24 md:w-32 md:h-32 mx-auto mb-6 md:mb-8 flex items-center justify-center">
@@ -535,18 +633,11 @@
 
       const grid = availCars.length === 0 ? '<div class="text-center py-20"><p class="text-slate-400">Nuk ka vetura</p></div>' :
         '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">' + availCars.map(c => {
-          const svcAlert = needsService(c) ? '<span class="absolute top-12 left-3 px-2 py-1 bg-red-600 text-white text-xs font-bold rounded-full animate-pulse">⚠️ SERVIS</span>' : '';
-          const adminBtns = currentUserRole === 'admin' ?
-            `<button onclick="window.deleteCar('${c.firestoreId}')" class="absolute bottom-3 right-3 p-2 bg-red-500/90 text-white rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-             <button onclick="window.openMaintenanceModal('${c.firestoreId}','${c.name}',${c.mileage || 0})" class="absolute bottom-3 right-12 p-2 bg-amber-500/90 text-white rounded-lg"><i data-lucide="wrench" class="w-4 h-4"></i></button>` : '';
-
           return `<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
             <div class="h-40 md:h-48 bg-slate-800 relative">
               <img src="${c.image}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x200'">
               <span class="absolute top-3 left-3 px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">E Lirë</span>
-              ${svcAlert}
               <span class="absolute top-3 right-3 px-3 py-1 bg-slate-900/90 text-white text-xs font-bold rounded-full">€${c.price}/ditë</span>
-              ${adminBtns}
             </div>
             <div class="p-4">
               <h3 class="font-bold text-white text-base md:text-lg">${c.name}</h3>
@@ -561,7 +652,7 @@
           </div>`;
         }).join('') + '</div>';
 
-      document.getElementById('contentArea').innerHTML = adminBtn + filterBar + grid;
+      document.getElementById('contentArea').innerHTML = filterBar + grid;
       lucide.createIcons();
     };
 
@@ -624,6 +715,52 @@
       lucide.createIcons();
     };
 
+    // SERVISI DASHBOARD
+    window.renderServisi = () => {
+      if (currentUserRole !== 'admin') return;
+      currentPage = 'servisi';
+      setActiveNav('nav-servisi');
+      document.getElementById('pageTitle').textContent = 'Servisi';
+      document.getElementById('pageSubtitle').textContent = 'Menaxhimi i Mirëmbajtjes';
+      closeMobileSidebar();
+
+      const carsTable = cars.length === 0 ? '<div class="text-center py-20"><p class="text-slate-400">Nuk ka vetura</p></div>' :
+        '<div class="overflow-x-auto"><div class="bg-slate-900 border border-slate-800 rounded-xl"><table class="w-full"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Vetura</th><th class="px-6 py-4 text-left">Targë</th><th class="px-6 py-4 text-center">KM Aktuale</th><th class="px-6 py-4 text-center">Servis i Fundit</th><th class="px-6 py-4 text-center">Statusi</th><th class="px-6 py-4 text-right">Veprime</th></tr></thead><tbody class="divide-y divide-slate-800">' +
+        cars.map(c => {
+          const kmDiff = (c.mileage || 0) - (c.lastServiceKm || 0);
+          const needsSvc = kmDiff >= 10000;
+          const statusBadge = needsSvc ?
+            '<span class="px-3 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded-full">⚠️ Servis i Nevojshëm</span>' :
+            '<span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">✓ OK</span>';
+
+          return `<tr><td class="px-6 py-4"><div class="text-white font-medium">${c.name}</div></td><td class="px-6 py-4 text-slate-400">${c.plate}</td><td class="px-6 py-4 text-center text-white">${(c.mileage || 0).toLocaleString()} km</td><td class="px-6 py-4 text-center text-slate-400">${(c.lastServiceKm || 0).toLocaleString()} km</td><td class="px-6 py-4 text-center">${statusBadge}</td><td class="px-6 py-4 text-right"><button onclick="window.openMaintenanceModal('${c.firestoreId}','${c.name}',${c.mileage || 0})" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 ml-auto"><i data-lucide="plus" class="w-4 h-4"></i>Shto Log</button></td></tr>`;
+        }).join('') +
+        '</tbody></table></div></div>';
+
+      const recentLogs = maintenanceLogs.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10);
+      const logsTable = recentLogs.length === 0 ? '<div class="text-center py-10"><p class="text-slate-500 text-sm">Nuk ka histori</p></div>' :
+        '<div class="overflow-x-auto"><div class="bg-slate-900 border border-slate-800 rounded-xl"><table class="w-full"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Data</th><th class="px-6 py-4 text-left">Vetura</th><th class="px-6 py-4 text-left">Lloji</th><th class="px-6 py-4 text-left">Përshkrimi</th><th class="px-6 py-4 text-right">Kosto</th><th class="px-6 py-4 text-center">Veprime</th></tr></thead><tbody class="divide-y divide-slate-800">' +
+        recentLogs.map(l => {
+          const car = cars.find(c => c.firestoreId === l.carId);
+          const typeClass = l.type === 'Servis' ? 'bg-emerald-500/20 text-emerald-400' : l.type === 'Defekt' ? 'bg-red-500/20 text-red-400' : 'bg-blue-500/20 text-blue-400';
+          return `<tr><td class="px-6 py-4 text-slate-400">${l.date}</td><td class="px-6 py-4 text-white">${car ? car.name : 'N/A'}</td><td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-medium ${typeClass}">${l.type}</span></td><td class="px-6 py-4 text-slate-300">${l.description}</td><td class="px-6 py-4 text-right text-amber-400 font-bold">€${l.cost}</td><td class="px-6 py-4 text-center"><div class="flex items-center justify-center gap-2"><button onclick="window.openEditLogModal('${l.firestoreId}','${l.type}','${l.description}',${l.cost},'${l.date}')" class="p-2 bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 rounded" title="Edit"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="window.deleteLog('${l.firestoreId}')" class="p-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 rounded" title="Delete"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></td></tr>`;
+        }).join('') +
+        '</tbody></table></div></div>';
+
+      document.getElementById('contentArea').innerHTML = `
+        <div class="mb-8">
+          <h3 class="text-lg font-bold text-white mb-4">Veturat & Statusi i Servisit</h3>
+          ${carsTable}
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-white mb-4">Historiku i Fundit</h3>
+          ${logsTable}
+        </div>
+      `;
+
+      lucide.createIcons();
+    };
+
     // CRUD Operations
     window.approveBooking = async id => {
       await updateDoc(doc(db, 'bookings', id), { status: 'approved' });
@@ -663,7 +800,7 @@
       const plate = document.getElementById('carPlate').value.trim();
       const price = parseFloat(document.getElementById('carPrice').value);
       const mileage = parseFloat(document.getElementById('carMileage').value) || 0;
-      const fuel = parseFloat(document.getElementById('carFuelLevel').value) || 100;
+      const lastServiceKm = parseFloat(document.getElementById('carLastServiceKm').value) || mileage;
       const image = document.getElementById('carImage').value.trim();
       const fuelType = document.getElementById('carFuelType').value;
 
@@ -674,9 +811,9 @@
 
       try {
         await addDoc(collection(db, 'cars'), {
-          name, plate, price, fuelType, mileage, fuel, image,
+          name, plate, price, fuelType, mileage, image,
           status: 'E Lirë',
-          lastServiceKm: mileage,
+          lastServiceKm: lastServiceKm,
           createdAt: new Date().toISOString()
         });
         showToast('U shtua!');
@@ -860,6 +997,56 @@
 
         showToast('U ruajt!');
         window.openMaintenanceModal(selectedCarForMaintenance.carId, selectedCarForMaintenance.carName, selectedCarForMaintenance.currentKm);
+      } catch (e) {
+        showToast('Gabim!');
+      }
+    };
+
+    // Edit & Delete Log Functions
+    window.openEditLogModal = (id, type, description, cost, date) => {
+      document.getElementById('editLogId').value = id;
+      document.getElementById('editLogType').value = type;
+      document.getElementById('editLogDescription').value = description;
+      document.getElementById('editLogCost').value = cost;
+      document.getElementById('editLogDate').value = date;
+      document.getElementById('editLogModal').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    window.closeEditLogModal = () => {
+      document.getElementById('editLogModal').classList.add('hidden');
+    };
+
+    window.saveEditedLog = async () => {
+      const id = document.getElementById('editLogId').value;
+      const type = document.getElementById('editLogType').value;
+      const description = document.getElementById('editLogDescription').value.trim();
+      const cost = parseFloat(document.getElementById('editLogCost').value) || 0;
+      const date = document.getElementById('editLogDate').value;
+
+      if (!description) {
+        showToast('Shto përshkrim!');
+        return;
+      }
+
+      try {
+        await updateDoc(doc(db, 'maintenanceLogs', id), {
+          type, description, cost, date
+        });
+        showToast('U ndryshua!');
+        closeEditLogModal();
+        renderServisi();
+      } catch (e) {
+        showToast('Gabim!');
+      }
+    };
+
+    window.deleteLog = async (id) => {
+      if (!confirm('Fshi këtë log?')) return;
+      try {
+        await deleteDoc(doc(db, 'maintenanceLogs', id));
+        showToast('U fshi!');
+        renderServisi();
       } catch (e) {
         showToast('Gabim!');
       }
