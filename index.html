@@ -266,6 +266,27 @@
     </div>
   </div>
 
+  <!-- Payment Warning Modal (Guest Success) -->
+  <div id="paymentWarningModal"
+    class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/95 glass">
+    <div
+      class="bg-slate-900 border border-amber-500/30 rounded-2xl shadow-2xl max-w-md w-full p-8 fade-in mx-4 text-center">
+      <div class="bg-amber-500/20 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+        <i data-lucide="alert-triangle" class="w-12 h-12 text-amber-400"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-white mb-4">Rezervimi në Pritje!</h2>
+      <p class="text-slate-300 mb-6 leading-relaxed">
+        Rezervimi juaj u dërgua me sukses. Për të kompletuar rezervimin,
+        <span class="text-amber-400 font-bold">JU LUTEM KRYENI PAGESËN</span>.
+        Pa pagesë, rezervimi nuk është i garantuar.
+      </p>
+      <button onclick="window.closePaymentWarningModal()"
+        class="w-full py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 rounded-xl font-bold text-lg transition-all shadow-lg">
+        Në Rregull
+      </button>
+    </div>
+  </div>
+
   <!-- Toast -->
   <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
     <div
@@ -303,7 +324,7 @@
     let selectedCarForBooking = null;
     let filterStartDate = '';
     let filterEndDate = '';
-    let hasSearched = false; // KEY: Track if user has searched
+    let hasSearched = false;
 
     // Firestore Listeners
     onSnapshot(collection(db, 'cars'), (snapshot) => {
@@ -407,7 +428,7 @@
       location.reload();
     };
 
-    // Filter cars - KEY FUNCTION
+    // Filter cars
     window.filterAvailableCars = () => {
       filterStartDate = document.getElementById('filterStartDate').value;
       filterEndDate = document.getElementById('filterEndDate').value;
@@ -482,7 +503,7 @@
       lucide.createIcons();
     };
 
-    // Render Cars - MAIN LOGIC WITH HERO SECTION
+    // Render Cars
     window.renderCars = () => {
       currentPage = 'cars';
       setActiveNav('nav-cars');
@@ -490,7 +511,6 @@
 
       const today = new Date().toISOString().split('T')[0];
 
-      // Admin Add Button - Always visible for admins
       const adminAddButton = currentUserRole === 'admin' ? `
         <div class="flex justify-end mb-6">
           <button onclick="window.openAddCarModal()" 
@@ -501,7 +521,7 @@
         </div>
       ` : '';
 
-      // If user hasn't searched yet, show HERO SECTION
+      // Hero Section (before search)
       if (!hasSearched) {
         document.getElementById('pageSubtitle').textContent = 'Zgjidhni datat për të kërkuar';
 
@@ -540,13 +560,10 @@
         return;
       }
 
-      // AFTER SEARCH - Show filtered cars
+      // After Search
       const availableCars = cars.filter(car => isCarAvailable(car.firestoreId, filterStartDate, filterEndDate));
       document.getElementById('pageSubtitle').textContent = `${availableCars.length} vetura të lira për: ${filterStartDate} - ${filterEndDate}`;
 
-      const statusColors = { 'E Lirë': 'bg-emerald-500', 'Me Qira': 'bg-violet-500', 'Në Servis': 'bg-amber-500' };
-
-      // Filter Bar (compact, after search)
       const filterBar = `
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 mb-6">
           <div class="flex flex-wrap items-center gap-4">
@@ -566,7 +583,6 @@
         </div>
       `;
 
-      // Car Grid
       const carGrid = availableCars.length === 0 ?
         `<div class="text-center py-20">
           <i data-lucide="car" class="w-16 h-16 text-slate-600 mx-auto mb-4"></i>
@@ -817,6 +833,17 @@
       selectedCarForBooking = null;
     };
 
+    // Payment Warning Modal
+    window.closePaymentWarningModal = () => {
+      document.getElementById('paymentWarningModal').classList.add('hidden');
+    };
+
+    window.showPaymentWarningModal = () => {
+      document.getElementById('paymentWarningModal').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    // Save Booking
     window.saveBooking = async () => {
       if (!selectedCarForBooking) return;
 
@@ -841,6 +868,8 @@
       }
 
       try {
+        const isAdmin = currentUserRole === 'admin';
+
         await addDoc(collection(db, 'bookings'), {
           carId: selectedCarForBooking.id,
           car: selectedCarForBooking.name,
@@ -849,12 +878,19 @@
           clientId: clientId || null,
           startDate,
           endDate,
-          status: currentUserRole === 'admin' ? 'approved' : 'pending',
+          status: isAdmin ? 'approved' : 'pending',
           createdAt: new Date().toISOString()
         });
 
-        showToast(currentUserRole === 'admin' ? 'Rezervimi u krye me sukses!' : 'Kërkesa u dërgua me sukses!');
         closeBookingModal();
+
+        // GUEST: Show payment warning modal
+        if (!isAdmin) {
+          showPaymentWarningModal();
+        } else {
+          // ADMIN: Just show toast
+          showToast('Rezervimi u krye me sukses!');
+        }
       } catch (error) {
         console.error('Error creating booking:', error);
         showToast('Gabim gjatë krijimit të rezervimit!');
