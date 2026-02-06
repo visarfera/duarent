@@ -40,11 +40,11 @@
 <body class="bg-slate-950 text-slate-200 min-h-screen flex">
   <!-- Login Modal -->
   <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 glass">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-8 fade-in">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-11/12 md:max-w-md p-6 md:p-8 fade-in">
       <div class="mb-6 flex justify-center"><img src="https://i.imgur.com/SZIoCrF.jpeg" alt="DUA Rent"
-          class="h-24 rounded-lg shadow-xl"></div>
-      <h2 class="text-3xl font-bold text-white text-center mb-2">Mirësevini</h2>
-      <p class="text-slate-400 text-center mb-8">Sistemi i menaxhimit të flotës</p>
+          class="h-20 md:h-24 rounded-lg shadow-xl"></div>
+      <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-2">Mirësevini</h2>
+      <p class="text-slate-400 text-center mb-6 md:mb-8 text-sm md:text-base">Sistemi i menaxhimit të flotës</p>
       <div class="space-y-3">
         <button onclick="window.loginAsGuest()"
           class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"><i
@@ -56,9 +56,9 @@
         </div>
         <div id="adminInputs" class="hidden space-y-3">
           <input type="email" id="adminEmail" placeholder="Email"
-            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none text-sm md:text-base">
           <input type="password" id="adminPassword" placeholder="Fjalëkalimi"
-            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"
+            class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none text-sm md:text-base"
             onkeypress="if(event.key==='Enter') window.loginAsAdmin()">
           <button onclick="window.loginAsAdmin()"
             class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold">Hyni</button>
@@ -66,25 +66,31 @@
         </div>
         <button id="showAdminBtn"
           onclick="document.getElementById('showAdminBtn').classList.add('hidden'); document.getElementById('adminInputs').classList.remove('hidden');"
-          class="w-full py-3 border border-slate-700 hover:border-indigo-500 text-slate-300 hover:text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"><i
+          class="w-full py-3 border border-slate-700 hover:border-indigo-500 text-slate-300 hover:text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2 text-sm md:text-base"><i
             data-lucide="shield-check" class="w-5 h-5"></i>Paneli i Administratorit</button>
       </div>
-      <div class="mt-8 pt-6 border-t border-slate-800 flex items-center justify-center gap-2 opacity-50"><span
-          class="text-xs text-slate-500">Powered by</span><img src="https://i.imgur.com/oksiI1G.png" alt="VEROS"
-          class="h-5"><span class="text-xs font-semibold text-slate-400">VEROS</span></div>
+      <div
+        class="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-slate-800 flex items-center justify-center gap-2 opacity-50">
+        <span class="text-xs text-slate-500">Powered by</span><img src="https://i.imgur.com/oksiI1G.png" alt="VEROS"
+          class="h-4 md:h-5"><span class="text-xs font-semibold text-slate-400">VEROS</span></div>
     </div>
   </div>
 
+  <!-- Mobile Overlay -->
+  <div id="mobileOverlay" class="hidden fixed inset-0 bg-slate-950/80 z-30 md:hidden"
+    onclick="window.closeMobileSidebar()"></div>
+
   <!-- Sidebar -->
-  <aside id="sidebar" class="hidden w-64 bg-slate-900 border-r border-slate-800 flex-col">
-    <div class="p-6 flex items-center gap-3 border-b border-slate-800"><img src="https://i.imgur.com/SZIoCrF.jpeg"
-        alt="Logo" class="w-10 h-10 rounded-lg shadow">
+  <aside id="sidebar"
+    class="hidden md:flex fixed md:relative w-64 bg-slate-900 border-r border-slate-800 flex-col z-40 h-full transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+    <div class="p-4 md:p-6 flex items-center gap-3 border-b border-slate-800">
+      <img src="https://i.imgur.com/SZIoCrF.jpeg" alt="Logo" class="w-10 h-10 rounded-lg shadow">
       <div>
         <h1 class="text-xl font-bold text-white">DUA<span class="font-light text-slate-400">Rent</span></h1><span
           class="text-xs text-slate-500 uppercase" id="userRoleBadge">Guest</span>
       </div>
     </div>
-    <nav class="flex-1 p-4 space-y-2 mt-2">
+    <nav class="flex-1 p-4 space-y-2 mt-2 overflow-y-auto">
       <button onclick="window.renderDashboard()" id="nav-dashboard"
         class="admin-only hidden w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition-all"><i
           data-lucide="layout-grid" class="w-5 h-5"></i><span class="font-medium">Paneli</span></button>
@@ -110,33 +116,39 @@
 
   <!-- Main Content -->
   <main id="mainContent" class="hidden flex-1 flex flex-col overflow-hidden">
-    <header class="bg-slate-900/50 glass border-b border-slate-800 px-8 py-4 flex justify-between items-center">
-      <div>
-        <h2 id="pageTitle" class="text-2xl font-bold text-white">Dashboard</h2>
-        <p id="pageSubtitle" class="text-slate-400 text-sm"></p>
+    <header
+      class="bg-slate-900/50 glass border-b border-slate-800 px-4 md:px-8 py-3 md:py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <button onclick="window.toggleMobileSidebar()" class="md:hidden p-2 text-slate-400 hover:text-white"><i
+            data-lucide="menu" class="w-6 h-6"></i></button>
+        <div>
+          <h2 id="pageTitle" class="text-xl md:text-2xl font-bold text-white">Dashboard</h2>
+          <p id="pageSubtitle" class="text-slate-400 text-xs md:text-sm"></p>
+        </div>
       </div>
       <div class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-indigo-400"></i><span
-          id="currentDate" class="text-sm text-slate-300 font-medium"></span></div>
+          id="currentDate" class="text-xs md:text-sm text-slate-300 font-medium"></span></div>
     </header>
-    <div id="contentArea" class="flex-1 overflow-y-auto p-8"></div>
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 md:p-8"></div>
   </main>
 
   <!-- Add Car Modal -->
-  <div id="addCarModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
+  <div id="addCarModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass p-4">
     <div
-      class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-2xl w-full p-8 fade-in mx-4 max-h-[90vh] overflow-y-auto">
+      class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto p-6 md:p-8 fade-in">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-white">Shto Veturë të Re</h2><button onclick="window.closeAddCarModal()"
-          class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+        <h2 class="text-xl md:text-2xl font-bold text-white">Shto Veturë të Re</h2><button
+          onclick="window.closeAddCarModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-6 h-6"></i></button>
       </div>
       <div class="space-y-4">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><label class="block text-sm text-slate-300 mb-2">Emri</label><input type="text" id="carName"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
           <div><label class="block text-sm text-slate-300 mb-2">Targë</label><input type="text" id="carPlate"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
         </div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><label class="block text-sm text-slate-300 mb-2">Çmimi (€/ditë)</label><input type="number" id="carPrice"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
           <div><label class="block text-sm text-slate-300 mb-2">Karburanti</label><select id="carFuelType"
@@ -146,7 +158,7 @@
               <option>Elektrik</option>
             </select></div>
         </div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><label class="block text-sm text-slate-300 mb-2">KM</label><input type="number" id="carMileage"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
           <div><label class="block text-sm text-slate-300 mb-2">Karburanti (%)</label><input type="number"
@@ -155,7 +167,7 @@
         </div>
         <div><label class="block text-sm text-slate-300 mb-2">URL Imazhi</label><input type="url" id="carImage"
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
-        <div class="flex gap-3 mt-6">
+        <div class="flex flex-col md:flex-row gap-3 mt-6">
           <button onclick="window.saveNewCar()"
             class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold">Ruaj</button>
           <button onclick="window.closeAddCarModal()"
@@ -166,11 +178,12 @@
   </div>
 
   <!-- Booking Modal -->
-  <div id="bookingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-lg w-full p-8 fade-in mx-4">
+  <div id="bookingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full md:max-w-lg p-6 md:p-8 fade-in">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-white">Rezervo Veturën</h2><button onclick="window.closeBookingModal()"
-          class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+        <h2 class="text-xl md:text-2xl font-bold text-white">Rezervo Veturën</h2><button
+          onclick="window.closeBookingModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-6 h-6"></i></button>
       </div>
       <p id="bookingCarName" class="text-indigo-400 font-semibold mb-4"></p>
       <div class="space-y-4">
@@ -179,13 +192,13 @@
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
         <div><label class="block text-sm text-slate-300 mb-2">Nr. ID</label><input type="text" id="bookingClientId"
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><label class="block text-sm text-slate-300 mb-2">Marrja</label><input type="date" id="bookingStartDate"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
           <div><label class="block text-sm text-slate-300 mb-2">Kthimi</label><input type="date" id="bookingEndDate"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
         </div>
-        <div class="flex gap-3 mt-6">
+        <div class="flex flex-col md:flex-row gap-3 mt-6">
           <button onclick="window.saveBooking()"
             class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold">Konfirmo</button>
           <button onclick="window.closeBookingModal()"
@@ -197,14 +210,15 @@
 
   <!-- Payment Warning Modal -->
   <div id="paymentWarningModal"
-    class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/95 glass">
+    class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/95 glass p-4">
     <div
-      class="bg-slate-900 border border-amber-500/30 rounded-2xl shadow-2xl max-w-md w-full p-8 fade-in mx-4 text-center">
-      <div class="bg-amber-500/20 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center"><i
-          data-lucide="alert-triangle" class="w-12 h-12 text-amber-400"></i></div>
-      <h2 class="text-2xl font-bold text-white mb-4">Rezervimi në Pritje!</h2>
-      <p class="text-slate-300 mb-6">Rezervimi u dërgua. <span class="text-amber-400 font-bold">JU LUTEM KRYENI
-          PAGESËN</span>. Pa pagesë, rezervimi nuk garantohet.</p>
+      class="bg-slate-900 border border-amber-500/30 rounded-2xl shadow-2xl w-full md:max-w-md p-6 md:p-8 fade-in text-center">
+      <div
+        class="bg-amber-500/20 p-6 rounded-full w-20 h-20 md:w-24 md:h-24 mx-auto mb-6 flex items-center justify-center">
+        <i data-lucide="alert-triangle" class="w-10 h-10 md:w-12 md:h-12 text-amber-400"></i></div>
+      <h2 class="text-xl md:text-2xl font-bold text-white mb-4">Rezervimi në Pritje!</h2>
+      <p class="text-slate-300 mb-6 text-sm md:text-base">Rezervimi u dërgua. <span class="text-amber-400 font-bold">JU
+          LUTEM KRYENI PAGESËN</span>. Pa pagesë, rezervimi nuk garantohet.</p>
       <button onclick="window.closePaymentWarningModal()"
         class="w-full py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 rounded-xl font-bold text-lg">Në
         Rregull</button>
@@ -212,18 +226,19 @@
   </div>
 
   <!-- Check-in Modal -->
-  <div id="checkinModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-8 fade-in mx-4">
+  <div id="checkinModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full md:max-w-md p-6 md:p-8 fade-in">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-white">Kthe Veturën</h2><button onclick="window.closeCheckinModal()"
-          class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+        <h2 class="text-xl md:text-2xl font-bold text-white">Kthe Veturën</h2><button
+          onclick="window.closeCheckinModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-6 h-6"></i></button>
       </div>
       <p id="checkinCarName" class="text-indigo-400 font-semibold mb-4"></p>
       <div class="space-y-4">
         <div><label class="block text-sm text-slate-300 mb-2">KM të Reja (Totali)</label><input type="number"
             id="checkinNewKm"
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none"></div>
-        <div class="flex gap-3 mt-6">
+        <div class="flex flex-col md:flex-row gap-3 mt-6">
           <button onclick="window.saveCheckin()"
             class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold">Konfirmo
             Kthimin</button>
@@ -235,11 +250,12 @@
   </div>
 
   <!-- Maintenance Modal -->
-  <div id="maintenanceModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass">
+  <div id="maintenanceModal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 glass p-4">
     <div
-      class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-2xl w-full p-8 fade-in mx-4 max-h-[90vh] overflow-y-auto">
+      class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto p-6 md:p-8 fade-in">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-white">🔧 Servis / Histori</h2><button
+        <h2 class="text-xl md:text-2xl font-bold text-white">🔧 Servis / Histori</h2><button
           onclick="window.closeMaintenanceModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
             class="w-6 h-6"></i></button>
       </div>
@@ -247,7 +263,7 @@
       <div id="maintenanceLogs" class="mb-6 max-h-48 overflow-y-auto"></div>
       <h3 class="text-lg font-bold text-white mb-4">Shto Log të Ri</h3>
       <div class="space-y-4">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><label class="block text-sm text-slate-300 mb-2">Lloji</label><select id="logType"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
               <option value="Servis">Servis</option>
@@ -270,7 +286,7 @@
   <!-- Toast -->
   <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
     <div
-      class="bg-slate-800 border-l-4 border-indigo-500 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3 min-w-[300px]">
+      class="bg-slate-800 border-l-4 border-indigo-500 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3 min-w-[250px] md:min-w-[300px]">
       <i data-lucide="check-circle" class="w-5 h-5 text-indigo-400"></i>
       <div>
         <h4 class="font-bold text-sm">Njoftim</h4>
@@ -329,6 +345,19 @@
         renderCars();
       }
     });
+
+    // Mobile Sidebar
+    window.toggleMobileSidebar = () => {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('mobileOverlay');
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+    };
+
+    window.closeMobileSidebar = () => {
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+      document.getElementById('mobileOverlay').classList.add('hidden');
+    };
 
     // Helper Functions
     window.showToast = m => {
@@ -418,6 +447,7 @@
 
       hasSearched = true;
       renderCars();
+      closeMobileSidebar();
     };
 
     window.clearFilter = () => {
@@ -434,6 +464,7 @@
       setActiveNav('nav-dashboard');
       document.getElementById('pageTitle').textContent = 'Dashboard';
       document.getElementById('pageSubtitle').textContent = 'Statistikat';
+      closeMobileSidebar();
 
       const total = cars.length;
       const avail = cars.filter(c => c.status === 'E Lirë').length;
@@ -442,7 +473,7 @@
         s + ((b.price || 0) * (Math.ceil((new Date(b.endDate) - new Date(b.startDate)) / 86400000) + 1)), 0);
 
       document.getElementById('contentArea').innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Totali</p><h3 class="text-3xl font-bold text-white">${total}</h3></div>
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Të Lira</p><h3 class="text-3xl font-bold text-emerald-400">${avail}</h3></div>
           <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl"><p class="text-slate-400 text-sm">Me Qira</p><h3 class="text-3xl font-bold text-violet-400">${rented}</h3></div>
@@ -458,27 +489,27 @@
       const today = new Date().toISOString().split('T')[0];
 
       const adminBtn = currentUserRole === 'admin' ?
-        '<div class="flex justify-end mb-6"><button onclick="window.openAddCarModal()" class="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold"><i data-lucide="plus" class="w-5 h-5"></i>Shto Veturë</button></div>' : '';
+        '<div class="flex justify-end mb-6"><button onclick="window.openAddCarModal()" class="flex items-center gap-2 px-4 md:px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-sm md:text-base"><i data-lucide="plus" class="w-5 h-5"></i>Shto Veturë</button></div>' : '';
 
       if (!hasSearched) {
         document.getElementById('pageSubtitle').textContent = 'Zgjidhni datat';
         document.getElementById('contentArea').innerHTML = adminBtn + `
           <div class="flex items-center justify-center min-h-[60vh]">
-            <div class="text-center max-w-2xl">
-              <div class="bg-indigo-500/20 p-8 rounded-full w-32 h-32 mx-auto mb-8 flex items-center justify-center">
-                <i data-lucide="calendar-search" class="w-16 h-16 text-indigo-400"></i>
+            <div class="text-center max-w-2xl px-4">
+              <div class="bg-indigo-500/20 p-6 md:p-8 rounded-full w-24 h-24 md:w-32 md:h-32 mx-auto mb-6 md:mb-8 flex items-center justify-center">
+                <i data-lucide="calendar-search" class="w-12 h-12 md:w-16 md:h-16 text-indigo-400"></i>
               </div>
-              <h2 class="text-3xl font-bold text-white mb-4">Zgjidhni datat për të parë veturat</h2>
-              <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 max-w-xl mx-auto">
-                <div class="grid grid-cols-2 gap-6 mb-6">
+              <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Zgjidhni datat për të parë veturat</h2>
+              <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 max-w-xl mx-auto">
+                <div class="flex flex-col md:grid md:grid-cols-2 gap-4 md:gap-6 mb-6">
                   <div><label class="block text-sm text-slate-300 mb-2 text-left">Marrja</label>
-                    <input type="date" id="filterStartDate" min="${today}" class="w-full px-4 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
+                    <input type="date" id="filterStartDate" min="${today}" class="w-full px-4 py-3 md:py-4 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
                   </div>
                   <div><label class="block text-sm text-slate-300 mb-2 text-left">Kthimi</label>
-                    <input type="date" id="filterEndDate" min="${today}" class="w-full px-4 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
+                    <input type="date" id="filterEndDate" min="${today}" class="w-full px-4 py-3 md:py-4 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none">
                   </div>
                 </div>
-                <button onclick="window.filterAvailableCars()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-lg flex items-center justify-center gap-3">
+                <button onclick="window.filterAvailableCars()" class="w-full py-3 md:py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-base md:text-lg flex items-center justify-center gap-3">
                   <i data-lucide="search" class="w-5 h-5"></i>Gjej Veturat
                 </button>
               </div>
@@ -493,24 +524,24 @@
 
       const filterBar = `
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 mb-6">
-          <div class="flex items-center gap-4">
-            <span class="text-slate-400">${filterStartDate} → ${filterEndDate}</span>
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4">
+            <span class="text-slate-400 text-sm md:text-base">${filterStartDate} → ${filterEndDate}</span>
             <div class="flex-1"></div>
-            <button onclick="window.clearFilter()" class="px-4 py-2 border border-slate-700 text-slate-400 rounded-lg flex items-center gap-2">
+            <button onclick="window.clearFilter()" class="px-4 py-2 border border-slate-700 text-slate-400 rounded-lg flex items-center gap-2 text-sm md:text-base">
               <i data-lucide="x" class="w-4 h-4"></i>Kërkim i Ri
             </button>
           </div>
         </div>`;
 
       const grid = availCars.length === 0 ? '<div class="text-center py-20"><p class="text-slate-400">Nuk ka vetura</p></div>' :
-        '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">' + availCars.map(c => {
+        '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">' + availCars.map(c => {
           const svcAlert = needsService(c) ? '<span class="absolute top-12 left-3 px-2 py-1 bg-red-600 text-white text-xs font-bold rounded-full animate-pulse">⚠️ SERVIS</span>' : '';
           const adminBtns = currentUserRole === 'admin' ?
             `<button onclick="window.deleteCar('${c.firestoreId}')" class="absolute bottom-3 right-3 p-2 bg-red-500/90 text-white rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
              <button onclick="window.openMaintenanceModal('${c.firestoreId}','${c.name}',${c.mileage || 0})" class="absolute bottom-3 right-12 p-2 bg-amber-500/90 text-white rounded-lg"><i data-lucide="wrench" class="w-4 h-4"></i></button>` : '';
 
           return `<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
-            <div class="h-48 bg-slate-800 relative">
+            <div class="h-40 md:h-48 bg-slate-800 relative">
               <img src="${c.image}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x200'">
               <span class="absolute top-3 left-3 px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">E Lirë</span>
               ${svcAlert}
@@ -518,12 +549,12 @@
               ${adminBtns}
             </div>
             <div class="p-4">
-              <h3 class="font-bold text-white text-lg">${c.name}</h3>
+              <h3 class="font-bold text-white text-base md:text-lg">${c.name}</h3>
               <p class="text-slate-400 text-sm">${c.plate}</p>
               <div class="flex gap-4 mt-3 text-xs text-slate-400">
                 <span><i data-lucide="gauge" class="w-3 h-3 inline"></i> ${(c.mileage || 0).toLocaleString()} km</span>
               </div>
-              <button onclick="window.openBookingModal('${c.firestoreId}','${c.name}',${c.price})" class="w-full mt-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium flex items-center justify-center gap-2">
+              <button onclick="window.openBookingModal('${c.firestoreId}','${c.name}',${c.price})" class="w-full mt-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium flex items-center justify-center gap-2 text-sm md:text-base">
                 <i data-lucide="calendar-plus" class="w-4 h-4"></i>Rezervo
               </button>
             </div>
@@ -540,6 +571,7 @@
       setActiveNav('nav-bookings');
       document.getElementById('pageTitle').textContent = 'Rezervimet';
       document.getElementById('pageSubtitle').textContent = `${bookings.length} rezervime`;
+      closeMobileSidebar();
 
       const badges = {
         pending: '<span class="px-2 py-1 bg-amber-500/10 text-amber-400 text-xs rounded">Në Pritje</span>',
@@ -549,7 +581,7 @@
       };
 
       document.getElementById('contentArea').innerHTML = bookings.length === 0 ? '<div class="text-center py-20"><p class="text-slate-400">Nuk ka rezervime</p></div>' :
-        '<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto"><table class="w-full min-w-[900px]"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Klienti</th><th class="px-6 py-4 text-left">Vetura</th><th class="px-6 py-4 text-left">Data</th><th class="px-6 py-4 text-left">Statusi</th><th class="px-6 py-4 text-right">Veprime</th></tr></thead><tbody class="divide-y divide-slate-800">' +
+        '<div class="overflow-x-auto"><div class="bg-slate-900 border border-slate-800 rounded-xl"><table class="w-full min-w-[900px]"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Klienti</th><th class="px-6 py-4 text-left">Vetura</th><th class="px-6 py-4 text-left">Data</th><th class="px-6 py-4 text-left">Statusi</th><th class="px-6 py-4 text-right">Veprime</th></tr></thead><tbody class="divide-y divide-slate-800">' +
         bookings.map(b => {
           const actions = [];
           if (b.status === 'pending') {
@@ -562,7 +594,7 @@
           actions.push(`<button onclick="window.deleteBooking('${b.firestoreId}')" class="p-2 bg-slate-700 text-slate-400 rounded"><i data-lucide="trash-2" class="w-4 h-4"></i></button>`);
 
           return `<tr><td class="px-6 py-4"><div class="text-white">${b.client}</div><div class="text-slate-500 text-xs">${b.clientId || 'N/A'}</div></td><td class="px-6 py-4 text-slate-400">${b.car}</td><td class="px-6 py-4 text-slate-400">${b.startDate} - ${b.endDate}</td><td class="px-6 py-4">${badges[b.status] || badges.pending}</td><td class="px-6 py-4 text-right"><div class="flex justify-end gap-2">${actions.join('')}</div></td></tr>`;
-        }).join('') + '</tbody></table></div>';
+        }).join('') + '</tbody></table></div></div>';
 
       lucide.createIcons();
     };
@@ -573,6 +605,7 @@
       setActiveNav('nav-clients');
       document.getElementById('pageTitle').textContent = 'Klientët';
       document.getElementById('pageSubtitle').textContent = 'Lista';
+      closeMobileSidebar();
 
       const cMap = new Map();
       bookings.forEach(b => {
@@ -584,9 +617,9 @@
       const clients = Array.from(cMap.values());
 
       document.getElementById('contentArea').innerHTML = clients.length === 0 ? '<div class="text-center py-20"><p class="text-slate-400">Nuk ka klientë</p></div>' :
-        '<div class="bg-slate-900 border border-slate-800 rounded-xl"><table class="w-full"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Emri</th><th class="px-6 py-4 text-left">ID</th><th class="px-6 py-4 text-center">Rezervime</th></tr></thead><tbody class="divide-y divide-slate-800">' +
+        '<div class="overflow-x-auto"><div class="bg-slate-900 border border-slate-800 rounded-xl"><table class="w-full"><thead class="bg-slate-800 text-xs text-slate-400 uppercase"><tr><th class="px-6 py-4 text-left">Emri</th><th class="px-6 py-4 text-left">ID</th><th class="px-6 py-4 text-center">Rezervime</th></tr></thead><tbody class="divide-y divide-slate-800">' +
         clients.map(c => `<tr><td class="px-6 py-4 text-white">${c.name}</td><td class="px-6 py-4 text-slate-400">${c.id || 'N/A'}</td><td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-slate-800 text-white rounded-full">${c.count}</span></td></tr>`).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
 
       lucide.createIcons();
     };
@@ -776,12 +809,12 @@
       document.getElementById('maintenanceLogs').innerHTML = logs.length === 0 ? '<p class="text-slate-500 text-sm">Nuk ka histori</p>' :
         '<div class="space-y-2">' + logs.map(l => {
           const typeClass = l.type === 'Servis' ? 'bg-emerald-500/20 text-emerald-400' : l.type === 'Defekt' ? 'bg-red-500/20 text-red-400' : 'bg-blue-500/20 text-blue-400';
-          return `<div class="bg-slate-800 p-3 rounded-lg flex justify-between items-center">
+          return `<div class="bg-slate-800 p-3 rounded-lg flex flex-col md:flex-row justify-between md:items-center gap-2">
             <div>
               <span class="text-xs px-2 py-1 rounded ${typeClass}">${l.type}</span>
-              <span class="text-white ml-2">${l.description}</span>
+              <span class="text-white ml-2 text-sm">${l.description}</span>
             </div>
-            <div class="text-right">
+            <div class="text-left md:text-right">
               <div class="text-amber-400 font-bold">€${l.cost}</div>
               <div class="text-slate-500 text-xs">${l.date}</div>
             </div>
